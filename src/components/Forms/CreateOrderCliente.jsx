@@ -21,13 +21,39 @@ function FormOrderCliente() {
     };
 
     const handleSubmit = methods.handleSubmit(async (e) => {
-            try {                       
-                await api.post('/api/clientes/', formData);
-                alert('Order created successfully');
-                navigate('/orders'); // Redirigir a la página principal
-            } catch (error) {
-                alert('An error occurred while creating the order');
-            }
+
+        try {
+            const url = tipo === 'facturas' ? "/orders/" : "/facturasRec/";
+            const response = await api.post('/api/clientes/', formData);
+            console.log(response);
+            // Muestra una notificación de éxito con SweetAlert2 que se cierra automáticamente después de 3 segundos
+            await Swal.fire({
+                icon: 'success',
+                title: 'Factura añadida correctamente',
+                text: "¿Quieres añadir otra?.",
+                customClass: isDarkMode ? 'swal2-dark' : '',
+                showCancelButton: true,
+                confirmButtonText: 'Si',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    setFormData({})
+                    // Navega a la página de inicio actual
+                    navigate('/orders/create/clientes');
+                } else {
+                    navigate('/orders');
+                }
+            });
+        } catch (error) {
+            // Muestra una notificación de error con SweetAlert2 que se cierra automáticamente después de 3 segundos
+            await Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "La factura no se ha podido crear",
+                timer: 2000, // Cierra automáticamente después de 3 segundos
+                timerProgressBar: true, // Muestra una barra de progreso mientras cuenta el tiempo
+            });
+        }
     });
 
     return (
@@ -36,12 +62,12 @@ function FormOrderCliente() {
                 <div className="column is-8-tablet is-7-desktop is-6-widescreen">
                     {/* Encabezado con botón "Back to Home" e icono de home */}
                     <div className="is-flex is-justify-content-space-between">
-                        <h2 className="title is-2">Create Order</h2>
+                        <h2 className="title is-2">Añadir cliente/Proveedor</h2>
                         <Link to="/orders" className="button is-link is-small px-5" style={{ height: '50px' }}>
                             <span className="icon">
                                 <i className="fas fa-home"></i>
                             </span>
-                            <span>Home</span>
+                            <span>Atras</span>
                         </Link>
                     </div>
 
@@ -123,7 +149,7 @@ function FormOrderCliente() {
 
                             {/* Botón de envío */}
                             <div className="m-3 columns is-justify-content-center is-align-items-center">
-                                <button type="submit" onClick={handleSubmit} className="button is-link px-5">Save</button>
+                                <button type="submit" onClick={handleSubmit} className="button is-link px-5">Guardar</button>
                             </div>
                         </form>
                     </FormProvider>

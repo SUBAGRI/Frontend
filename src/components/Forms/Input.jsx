@@ -48,7 +48,7 @@ export const Input = ({ label, type, name, value, placeholder, onChange, classNa
            onChange: (e) => {onChange(e)},
             required: { 
               value: true,
-              message: 'required',
+              message: 'Obligatorio',
             },
             value: {
               value: value,

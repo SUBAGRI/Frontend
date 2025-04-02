@@ -121,7 +121,7 @@ function ModalEditCliente({ formData, closeModal, isActive }) {
                 </section>
                 <footer className="modal-card-foot" style={{ backgroundColor: '#00D1B2' }}>
                     <div className="buttons">
-                        <button type="submit" className="button is-success" onClick={onSubmit} style={{ backgroundColor: '#2c3c5b', color: 'white' }}>Save</button>
+                        <button type="submit" className="button is-success" onClick={onSubmit} style={{ backgroundColor: '#2c3c5b', color: 'white' }}>Guardar</button>
                     </div>
                 </footer>
             </div>

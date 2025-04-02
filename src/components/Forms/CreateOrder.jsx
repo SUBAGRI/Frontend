@@ -108,8 +108,8 @@ function FormOrder({ tipo, clientes }) {
             // Muestra una notificación de error con SweetAlert2 que se cierra automáticamente después de 3 segundos
             await Swal.fire({
                 icon: 'error',
-                title: 'Errore',
-                text: "L'ordine non può essere modificato",
+                title: 'Error',
+                text: "La factura no se ha podido crear",
                 timer: 2000, // Cierra automáticamente después de 3 segundos
                 timerProgressBar: true, // Muestra una barra de progreso mientras cuenta el tiempo
             });
@@ -123,7 +123,7 @@ function FormOrder({ tipo, clientes }) {
                 <div className="column is-8-tablet is-7-desktop is-6-widescreen">
                     {/* Encabezado con botón "Back to Home" e icono de home */}
                     <div className="is-flex is-justify-content-space-between">
-                        <h2 className="title is-2">Create Order</h2>
+                        <h2 className="title is-2">Crear Factura</h2>
                         <Link to="/orders" className="button is-link is-small px-5" style={{ height: '50px' }}>
                             <span className="icon">
                                 <i className="fas fa-home"></i>
@@ -260,7 +260,7 @@ function FormOrder({ tipo, clientes }) {
 
                             {/* Botón de envío */}
                             <div className="m-3 columns is-justify-content-center is-align-items-center">
-                                <button type="submit" onClick={handleSubmit} className="button is-link px-5">Save</button>
+                                <button type="submit" onClick={handleSubmit} className="button is-link px-5">Guardar</button>
                             </div>
                         </form>
                     </FormProvider>

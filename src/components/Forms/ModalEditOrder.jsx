@@ -79,8 +79,8 @@ function ModalEdit({ formData, closeModal, isActive, fetchData, tipo }) {
             // Muestra una notificación de éxito con SweetAlert2 que se cierra automáticamente después de 3 segundos
             await Swal.fire({
                 icon: 'successo',
-                title: 'Ordine contrassegnato come concluso',
-                text: "L'ordine è stato contrassegnato come concluso.",
+                title: 'Correcto',
+                text: "La factura ha sido modificada correctamente",
                 timer: 2000, // Cierra automáticamente después de 3 segundos (3000 milisegundos)
                 timerProgressBar: true, // Muestra una barra de progreso mientras cuenta el tiempo
                 customClass: isDarkMode ? 'swal2-dark' : '',
@@ -92,8 +92,8 @@ function ModalEdit({ formData, closeModal, isActive, fetchData, tipo }) {
             // Muestra una notificación de error con SweetAlert2 que se cierra automáticamente después de 3 segundos
             await Swal.fire({
                 icon: 'error',
-                title: 'Errore',
-                text: "L'ordine non può essere modificato",
+                title: 'Error',
+                text: "La factura no se ha podido modificar",
                 timer: 2000, // Cierra automáticamente después de 3 segundos
                 timerProgressBar: true, // Muestra una barra de progreso mientras cuenta el tiempo
             });
@@ -107,7 +107,7 @@ function ModalEdit({ formData, closeModal, isActive, fetchData, tipo }) {
             <div className="modal-background"></div>
             <div className="modal-card">
                 <header className="modal-card-head" style={{ backgroundColor: '#00D1B2' }}>
-                    <p className="modal-card-title">Modifica ordine</p>
+                    <p className="modal-card-title">Modificar factura</p>
                     <button className="delete" aria-label="close" onClick={closeModal}></button>
                 </header>
                 <section style={{ margin: 0 }} className="modal-card-body">
@@ -256,7 +256,7 @@ function ModalEdit({ formData, closeModal, isActive, fetchData, tipo }) {
                 </section>
                 <footer className="modal-card-foot" style={{ backgroundColor: '#00D1B2' }}>
                     <div className="buttons">
-                        <button type="submit" className="button is-success" onClick={onSubmit} style={{ backgroundColor: '#2c3c5b', color: 'white' }}>Save</button>
+                        <button type="submit" className="button is-success" onClick={onSubmit} style={{ backgroundColor: '#2c3c5b', color: 'white' }}>Guardar</button>
                     </div>
                 </footer>
             </div>

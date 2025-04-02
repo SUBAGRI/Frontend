@@ -58,11 +58,11 @@ function Form({ route, method }) {
                     <div className="column is-4 is-offset-4">
                         <h3 className="title has-text-black">{name}</h3>
                         <hr className="login-hr"></hr>
-                        <p className="subtitle ha-text-black">Please {name} to proceed.</p>
+                        <p className="subtitle ha-text-black">Por favor {name} para continuar.</p>
                         <div className="box" style={{margin:'', backgroundColor: '#00D1B2' }}>
                             <br/>
                             <figure >
-                                <img src="img/logo.png" style={{width:320}}></img>
+                                <img src="img/" style={{width:320}}></img>
                             </figure>
                             <br/>
                             <FormProvider {...methods}>
@@ -74,7 +74,7 @@ function Form({ route, method }) {
                                                 name="username"
                                                 className="input is-large"
                                                 value={formData.username}
-                                                placeholder="Your Username"
+                                                placeholder="Tu usuario"
                                                 onChange={handleChange}
                                             />
                                         </div>
@@ -87,7 +87,7 @@ function Form({ route, method }) {
                                                 name="password"
                                                 className="input is-large"
                                                 value={formData.password}
-                                                placeholder="Your Password"
+                                                placeholder="Tu contraseña"
                                                 onChange={handleChange}
                                             />
                                         </div>

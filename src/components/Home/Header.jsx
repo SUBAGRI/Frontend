@@ -86,7 +86,7 @@ function Header({ orders, originalOrders, setOrders, fetchData,
                 <div id="navbarMenu" className={`navbar-menu ${isMenuActive ? "is-active" : ""}`}>
                     <div className="navbar-start">
                         <div className="navbar-item is-hoverable">
-                            <Link className="navbar-item" to="/">Home</Link>
+                            <Link className="navbar-item" to="/">Volver</Link>
 
                             <p className="navbar-link" onClick={toggleDocsMenu}>
                                 Docs
@@ -104,7 +104,7 @@ function Header({ orders, originalOrders, setOrders, fetchData,
                                     <span className="icon">
                                         <i className="fas fa-file-excel"></i>
                                     </span>
-                                    <span>descargar excel</span>
+                                    <span>Descargar excel</span>
                                 </button>
                             
                                 <Link className="button is-danger" to="/logout">
