@@ -1,0 +1,32 @@
+/* Estilo para pantallas pequeñas */
+@media (max-width: 1024px) {
+    .table {
+        font-size: 12px;
+    } 
+
+    /* Ocultar el texto de los botones */
+    .button span {
+        font-size: small;
+
+    }
+    .control.ml-auto.columns {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end; /* Alinear los elementos al final */
+        align-items: center; /* Centrar verticalmente los elementos */
+        gap: 10px; /* Espaciado entre los elementos */
+    }
+
+    /* Ajustar el tamaño de la barra de búsqueda para que quepa al lado */
+    .control.ml-auto.columns .column:first-child {
+        margin-left: 5%;
+
+        flex: 1; /* Hacer que la primera columna (barra de búsqueda) ocupe el espacio restante */
+    }
+
+    /* Ajustar el tamaño de los botones para que se ajusten a las pantallas pequeñas */
+    .control.ml-auto.columns .column:last-child .button {
+        width: auto; /* Dejar que los botones ocupen el espacio que necesiten */
+    }
+
+}

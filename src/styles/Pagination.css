@@ -1,0 +1,15 @@
+.pagination {
+    width: auto; /* Ajusta el ancho para que se ajuste al contenido */
+    white-space: nowrap; /* Evita que los elementos se envuelvan */
+    overflow-x: hidden; /* Oculta la barra de desplazamiento horizontal */
+}
+.pagination-list {
+    display: flex;
+    justify-content: center; /* Centra los elementos de la lista */
+    gap: 5px; /* Espacio entre los elementos de la lista */
+}
+.pagination-link {
+    padding: 5px 10px;
+    text-align: center;
+    white-space: nowrap; /* Evita el wrapping de texto */
+}

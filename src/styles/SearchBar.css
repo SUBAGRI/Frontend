@@ -1,0 +1,43 @@
+.input-wrapper {
+  width: 100%;
+  height: 2.5rem;
+  border: none;
+  border-radius: 10px;
+  padding: 0 15px;
+  background-color: #00D1B2;
+  display: flex;
+  align-items: center;
+}
+
+input {
+  background-color: transparent;
+  border: none;
+  height: 100%;
+  width: 100%; /* Cambia a un valor menor si deseas */
+  margin-left: 3px;
+}
+
+input:focus {
+  outline: none;
+  
+}
+
+#search-icon {
+  color: #0A1F15;
+}
+
+/* Estilos para el contenedor */
+.input-container {
+  display: flex; /* Utiliza flexbox para alinear los elementos horizontalmente */
+  align-items: center; /* Alinea verticalmente los elementos al centro */
+}
+
+/* Estilos opcionales para personalizar el espacio entre los elementos */
+.input-container > *:not(:last-child) {
+  margin-right: 10px; /* Espacio entre los elementos */
+}
+
+.calendar-icon {
+  cursor: pointer; /* Cursor de puntero para indicar que es clicable */
+  color: black; /* Color negro para el icono */
+}
