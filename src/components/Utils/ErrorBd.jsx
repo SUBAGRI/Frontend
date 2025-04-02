@@ -12,7 +12,7 @@ function useErrorAndLogout() {
         Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'Si è verificato un errore, riprovare più tardi.',
+            text: 'Se ha producido un error, por favor intente mas tarde',
             confirmButtonText: 'OK', // Texto del botón
             customClass: 'swal2-dark' // Agrega un tema oscuro si lo deseas
         }).then((result) => {
