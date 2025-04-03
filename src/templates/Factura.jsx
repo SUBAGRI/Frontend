@@ -1,57 +1,100 @@
-import * as XLSX from 'xlsx';
-import { saveAs } from 'file-saver';
+import * as XLSX from "xlsx";
+import ExcelJS from "exceljs";
+import { saveAs } from "file-saver";
 
-export const DownloadExcel = () => {
-        // Crear un nuevo libro de trabajo
-        const wb = XLSX.utils.book_new();
+const clientesData = {
+    "STE VOYAGE BOUHAOUI": [
+      "STE VOYAGE BOUHAOUI",
+      "QUARTIER EL AMAL",
+      "RUE ABOU ALLA Nº 337",
+      "ICE: 002651001000049",
+    ],
+    "STE PROJ FRIO SARL": [
+      "STE PROJ FRIO SARL",
+      "AIN KAICHER, BEJAAD",
+      "25050 MARRUECOS",
+      "ICE: 002605622000075",
+    ],
+    "ALF SMARA": [
+      "ALF SMARA",
+      "RC:69267",
+      "AV. SAID DAOUDI LOT 10, RES. OUMNIA BUREAU 3",
+      "14000 KENITRA, MARRUECOS",
+      "ICE:003293122000077",
+    ],
+    "THANKS GLOBAL": [
+      "THANKS GLOBAL",
+      "12 RUE SARIA BEN ZOUNAIM ETG 3 APT 3",
+      "PALMIER CHEZ CA MERYAMA. 20430 CASABLANCA.MAROC",
+      "ICE:003463311000058",
+    ],
+    "SOCIETE FRERES CHERGUIA": [
+      "SOCIETE FRERES CHERGUIA",
+      "QUARTIER DOUNIA II OULED TEIMA TAROUDANT",
+      "MARRUECOS",
+      "ICE: 003181192000055",
+    ],
+    "LYAQOUTI AGRO SARL": [
+      "LYAQOUTI AGRO SARL",
+      "2EGHMARATECOMMUNE CHAAIBATE CERCLE S IDI",
+      "CP 5692 BIRANZARANE-EL JADIDA - MARRUECO",
+      "ICE: 003507328000043",
+    ],
+    "SOCIETE INES Y HENOS SARL AU": [
+      "SOCIETE INES Y HENOS SARL AU",
+      "DOUAR LAKHMAISS EL KOLEAT AIT MELLOUL",
+      "LQLIAA-TANGER-MARRUECOS",
+      "47245041-M",
+      "ICE: 002605084000051",
+    ],
+  };
+
+export const ModifyExcel = async ( formData ) => {
+        // 1. Cargar la plantilla desde public/
+        const response = await fetch("/plantilla.xlsx");
+        const arrayBuffer = await response.arrayBuffer();
+
+        // 2. Crear un nuevo workbook y cargar el archivo
+        const workbook = new ExcelJS.Workbook();
+        await workbook.xlsx.load(arrayBuffer);
+
+        // 3. Seleccionar la hoja (puedes cambiar el índice si es necesario)
+        const worksheet = workbook.worksheets[0];
+
+        // 4. Modificar celdas sin perder formatos
+        // Fecha
+        const cellC10 = worksheet.getCell("C10");
+        cellC10.value = formData.fechaFactura; // Modificar contenido
+        cellC10.font = { bold: true };
+
+        //N Factura
+        const cellC11 = worksheet.getCell("C11");
+        cellC11.value = '2025/' + formData.numeroFactura;
+        cellC11.font = { bold: true };
+
+        //Cliente
+        const clientData = clientesData[formData.cliente];
+
+        clientData.forEach((fila, index) => {
+            const cell = worksheet.getCell(`C${13 + index}`); // Comienza en C14
+            cell.value = fila;
+            cell.font = { bold: true }; // Opcional: puedes hacer cada fila en negrita
+          });
+
+        //Pesos
+        const cellB24 =worksheet.getCell("B24");
+        cellB24.value = formData.camiones[0].kilos/1000;
+
+        //Carga
+        const cellC24 = worksheet.getCell("C24");
+        cellC24.value = 'TN PAJA DE TRIGO PRENSADA ' + formData.tipoPaja.toUpperCase();
+
+        //Matriculas
+        const cellC25 = worksheet.getCell("C25");
+        cellC25.value = 'MATRICULA ' +  formData.camiones[0].matriculaTractora + ' REMOLQUE ' + formData.camiones[0].matriculaRemolque
         
-        // Definir los datos exactamente como en el archivo original
-        const data = [
-            ["", "TRANSFORMACIONES SUBAGRI, S.L.", "", "", "", "", "FACTURA"],
-            ["", "C.I.F: B-91475913"],
-            ["", ""],
-            ["", "Cl Albina s/n"],
-            ["", "Ftes de Andalucia 41420"],
-            ["", "Tel: 954 837 001"],
-            ["", "Email: contacto@subagri.com"],
-            ["", ""],
-            ["", "Cliente:", "", "Fecha:", "", "Factura Nº:", ""],
-            ["", "Nombre Cliente", "", "01/04/2025", "", "F145"],
-            ["", "Dirección Cliente"],
-            ["", ""],
-            ["", "Descripción", "Cantidad", "Precio Unitario", "Total"],
-            ["", "Producto A", "2", "50.00", "100.00"],
-            ["", "Producto B", "1", "75.00", "75.00"],
-            ["", "Producto C", "3", "20.00", "60.00"],
-            ["", ""],
-            ["", "Subtotal", "", "", "235.00"],
-            ["", "IVA (21%)", "", "", "49.35"],
-            ["", "Total", "", "", "284.35"],
-            ["", ""],
-            ["", "Forma de pago: Transferencia bancaria"],
-            ["", "IBAN: ES91 2100 0418 4502 0005 1332"],
-            ["", ""],
-            ["", "Gracias por su compra"]
-        ];
-        
-        // Crear una hoja con los datos
-        const ws = XLSX.utils.aoa_to_sheet(data);
-        
-        // Ajustar el formato de las celdas
-        ws['!cols'] = [
-            { wch: 5 },
-            { wch: 40 },
-            { wch: 10 },
-            { wch: 10 },
-            { wch: 10 },
-            { wch: 10 },
-            { wch: 15 }
-        ];
-        
-        // Agregar la hoja al libro
-        XLSX.utils.book_append_sheet(wb, ws, "PROJ FRIO F145");
-        
-        // Escribir y descargar el archivo
-        const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
-        saveAs(new Blob([wbout], { type: 'application/octet-stream' }), 'Intento1.xlsx');
+
+        // 6. Guardar el archivo modificado y descargarlo
+        const blob = await workbook.xlsx.writeBuffer();
+        saveAs(new Blob([blob]), "F" + formData.numeroFactura + ' ' + formData.cliente);
     };

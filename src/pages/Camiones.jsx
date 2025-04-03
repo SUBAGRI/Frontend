@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import {DownloadExcel} from '../templates/Factura'
+import {ModifyExcel} from '../templates/Factura'
 
 const ClientForm = () => {
   // Estado para los datos del formulario
@@ -14,7 +14,7 @@ const ClientForm = () => {
   });
 
   // Lista de clientes (puedes cargarla dinámicamente)
-  const clientes = ['Cliente 1', 'Cliente 2', 'Cliente 3'];
+  const clientes = ['STE PROJ FRIO SARL', 'Cliente 2', 'Cliente 3'];
 
   // Lista de tipos de paja
   const tiposDePaja = ['Heno de avena', 'Guisante', 'Imabe', 'Jovisa', 'Paquete pequeño'];
@@ -63,9 +63,9 @@ const ClientForm = () => {
   };
 
   // Manejar el envío del formulario (por ahora solo logueamos los datos)
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    DownloadExcel();
+    await ModifyExcel(formData);
     console.log(formData);
     
   };
