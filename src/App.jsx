@@ -8,6 +8,7 @@ import CreateOrder from "./pages/CreateOrderPage";
 import ProtectedRoute from "./components/Utils/ProtectedRoute";
 import Orders from './pages/Orders';
 import AdminPage from './pages/AdministradorPage';
+import FormCamiones from './pages/Camiones'
 
 function Logout() {
   localStorage.clear();
@@ -56,6 +57,7 @@ function App() {
         
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/camiones" element={<FormCamiones />} />
         <Route path="/register" element={
           <ProtectedRoute>
             <Register />

@@ -216,14 +216,6 @@ function Order({ orders, fetchData, tableTab }) {
                 </tbody>
             </table>
 
-            {isModalActive && (
-                <ModalEdit
-                    formData={selectedOrder} // Pasar el pedido seleccionado al modal
-                    isActive={isModalActive}
-                    closeModal={() => setIsModalActive(false)}
-                    fetchData={fetchData}
-                />
-            )}
             {/* Paginación */}
             <Pagination
                 ordersPerPage={ordersPerPage}
