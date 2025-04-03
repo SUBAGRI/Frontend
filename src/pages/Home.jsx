@@ -8,12 +8,12 @@ function Home() {
 
     const Jesi = () => {
         localStorage.setItem("Sitio", "Jesi");
-        navigate("/orders");
+        navigate("/#/orders");
     }
 
     const Senigalia = () => {
         localStorage.setItem("Sitio", "Senigalia");
-        navigate("/");
+        navigate("/#/camiones");
     }
 
     return (
