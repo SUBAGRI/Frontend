@@ -3,10 +3,10 @@ import api from '../../api';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
 import { Input } from './Input';
-import { IVAInput } from "./UtilsForm/InputIVA"
+import IVAInput from "./UtilsForm/InputIVA";
 import Swal from 'sweetalert2';
-import ClienteAutocomplete from './UtilsForm/clienteAutocomplete'
-import ProveedorAutocomplete from './UtilsForm/proveedorAutocomplete'
+import ClienteAutocomplete from './UtilsForm/clienteAutocomplete';
+import ProveedorAutocomplete from './UtilsForm/proveedorAutocomplete';
 
 function FormOrder({ tipo, clientes }) {
     const methods = useForm();
@@ -201,7 +201,7 @@ function FormOrder({ tipo, clientes }) {
                                     </label>
                                     <IVAInput formData={formData} setFormData={setFormData} />
                                 </div>
-                            </div>
+                            </div>  
 
                             <div className="field mb-4 is-grouped" style={{ justifyContent: 'space-between' }}>
                                 <div className="flex flex-col w-full gap-2">
