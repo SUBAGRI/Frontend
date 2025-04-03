@@ -8,7 +8,7 @@ function Home() {
 
     const Jesi = () => {
         localStorage.setItem("Sitio", "Jesi");
-        navigate("/Orders");
+        navigate("/orders");
     }
 
     const Senigalia = () => {
