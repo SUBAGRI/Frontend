@@ -63,7 +63,7 @@ function Pagination({ ordersPerPage, totalOrders, paginate, activePage }) {
                                 onClick={handleFirstPage}
                                 aria-label="First page"
                             >
-                                First
+                                Primera
                             </a>
                         </li>
 
@@ -75,7 +75,7 @@ function Pagination({ ordersPerPage, totalOrders, paginate, activePage }) {
                                 onClick={handlePreviousPage}
                                 aria-label="Previous page"
                             >
-                                &laquo; Previous
+                                &laquo; Anterior
                             </a>
                         </li>
 
@@ -100,7 +100,7 @@ function Pagination({ ordersPerPage, totalOrders, paginate, activePage }) {
                                 onClick={handleNextPage}
                                 aria-label="Next page"
                             >
-                                Next &raquo;
+                                Siguiente &raquo;
                             </a>
                         </li>
 
@@ -112,7 +112,7 @@ function Pagination({ ordersPerPage, totalOrders, paginate, activePage }) {
                                 onClick={handleLastPage}
                                 aria-label="Last page"
                             >
-                                Last
+                                Ultima
                             </a>
                         </li>
                     </ul>

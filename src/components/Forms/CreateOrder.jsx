@@ -3,6 +3,7 @@ import api from '../../api';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
 import { Input } from './Input';
+import { IVAInput } from "./UtilsForm/InputIVA"
 import Swal from 'sweetalert2';
 import ClienteAutocomplete from './UtilsForm/clienteAutocomplete'
 import ProveedorAutocomplete from './UtilsForm/proveedorAutocomplete'
@@ -198,15 +199,7 @@ function FormOrder({ tipo, clientes }) {
                                     <label htmlFor="Costo" className="label is-small">
                                         IVA importe
                                     </label>
-                                    <Input
-                                        className='input'
-                                        placeholder="IVA importe"
-                                        type="number"
-                                        name="IVAimp"
-                                        value={(parseFloat(formData.baseimp || 0) * (parseFloat(formData.IVA || 0) / 100)).toFixed(2)}
-                                        readOnly
-                                        min={0}
-                                    />
+                                    <IVAInput formData={formData} setFormData={setFormData} />
                                 </div>
                             </div>
 
