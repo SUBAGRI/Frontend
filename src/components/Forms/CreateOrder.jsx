@@ -56,8 +56,8 @@ function FormOrder({ tipo, clientes }) {
             if (name === 'baseimp' || name === 'IVA') {
                 updatedData.total = Math.ceil(
                     (parseFloat(updatedData.baseimp || 0) + 
-                    (parseFloat(updatedData.baseimp || 0) * 
-                    (parseFloat(updatedData.IVA || 0) / 100))) * 100
+                    parseFloat(updatedData.IVAimp || 0) + 
+                    parseFloat(updatedData.IRPfimp || 0)) * 100
                 ) / 100;
                 
                 updatedData.IVAimp = Math.ceil(
@@ -239,11 +239,7 @@ function FormOrder({ tipo, clientes }) {
                                     type="text"
                                     name="total"
                                     placeholder="Total"
-                                    value={(
-                                        Math.ceil(((parseFloat(formData.baseimp || 0) + 
-                                        parseFloat(formData.IVAimp || 0) + 
-                                        parseFloat(formData.IRPfimp || 0)) * 100)) / 100
-                                    ).toFixed(2)}
+                                    value={(formData.total).toFixed(2)}
                                     readOnly
                                     
                                 />

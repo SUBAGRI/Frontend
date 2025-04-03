@@ -31,7 +31,8 @@ function IVAInput({ formData, setFormData }) {
         IVA %
       </label>
       {!isCustom ? (
-        <select
+        <Input
+          type="select"
           className="input"
           name="IVA"
           value={formData.IVA || ""}
@@ -44,7 +45,7 @@ function IVAInput({ formData, setFormData }) {
             </option>
           ))}
           <option value="custom">Otro (escribir)</option>
-        </select>
+        </Input>
       ) : (
         <Input
           className="input"
