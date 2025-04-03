@@ -54,17 +54,18 @@ function FormOrder({ tipo, clientes }) {
             }
     
             if (name === 'baseimp' || name === 'IVA') {
+                updatedData.IVAimp = Math.ceil(
+                    (parseFloat(updatedData.baseimp || 0) * 
+                    (parseFloat(updatedData.IVA || 0) / 100)) * 100
+                ) / 100;
+
                 updatedData.total = Math.ceil(
                     (parseFloat(updatedData.baseimp || 0) + 
                     parseFloat(updatedData.IVAimp || 0) + 
                     parseFloat(updatedData.IRPfimp || 0)) * 100
                 ) / 100;
                 
-                updatedData.IVAimp = Math.ceil(
-                    (parseFloat(updatedData.baseimp || 0) * 
-                    (parseFloat(updatedData.IVA || 0) / 100)) * 100
-                ) / 100;
-            }
+            }   
     
             if (name === 'baseimp' || name === 'IRPf') {
                 updatedData.IRPfimp = Math.ceil(
@@ -177,14 +178,12 @@ function FormOrder({ tipo, clientes }) {
                                         type="number"
                                         name="baseimp"
                                         placeholder="Base imponible"
-                                        value={formData.baseimp || 0}
+                                        value={formData.baseimp || ""}
                                         onChange={handleChange}
                                         min={0}
                                     />
                                 </div>
-                                <div className="flex flex-col w-full gap-2">
-                                    <IVAInput formData={formData} setFormData={setFormData} />
-                                </div>
+                                <IVAInput formData={formData} setFormData={setFormData} handleChange2={handleChange} />
                                 <div className="flex flex-col w-full gap-2">
                                     <label htmlFor="Costo" className="label is-small">
                                         IVA importe
@@ -239,7 +238,11 @@ function FormOrder({ tipo, clientes }) {
                                     type="text"
                                     name="total"
                                     placeholder="Total"
-                                    value={(formData.total).toFixed(2)}
+                                    value={(
+                                        Math.ceil(((parseFloat(formData.baseimp || 0) + 
+                                        parseFloat(formData.baseimp || 0) * (parseFloat(formData.IVA || 0) / 100) +
+                                        parseFloat(formData.IRPfimp || 0)) * 100)) / 100
+                                    ).toFixed(2)}
                                     readOnly
                                     
                                 />

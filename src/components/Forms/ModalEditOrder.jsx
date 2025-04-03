@@ -41,18 +41,25 @@ function ModalEdit({ formData, closeModal, isActive, fetchData, tipo }) {
     
         setFormData((prevData) => {
             const updatedData = { ...prevData, [name]: inputValue };
+
+            // Si el campo es numérico, eliminar ceros iniciales (excepto "0" solo)
+            if (!isNaN(inputValue) && inputValue.length > 1 && inputValue.startsWith("0")) {
+                let cleanedValue = inputValue.replace(/^0+/, ""); // Quita los ceros iniciales
+                updatedData[name] = cleanedValue;
+            }
     
             if (name === 'baseimp' || name === 'IVA') {
+                updatedData.IVAimp = Math.ceil(
+                    (parseFloat(updatedData.baseimp || 0) * 
+                    (parseFloat(updatedData.IVA || 0) / 100)) * 100
+                ) / 100;
+
                 updatedData.total = Math.ceil(
                     (parseFloat(updatedData.baseimp || 0) + 
                     (parseFloat(updatedData.baseimp || 0) * 
                     (parseFloat(updatedData.IVA || 0) / 100))) * 100
                 ) / 100;
                 
-                updatedData.IVAimp = Math.ceil(
-                    (parseFloat(updatedData.baseimp || 0) * 
-                    (parseFloat(updatedData.IVA || 0) / 100)) * 100
-                ) / 100;
             }
     
             if (name === 'baseimp' || name === 'IRPf') {
@@ -164,24 +171,22 @@ function ModalEdit({ formData, closeModal, isActive, fetchData, tipo }) {
                                     <label htmlFor="Pezzo" className="label is-small">
                                         Base Imponible
                                     </label>
-                                    <input
+                                    <Input
                                         className='input'
                                         type="number"
                                         name="baseimp"
                                         placeholder="Base imponible"
-                                        value={formData2.baseimp || 0}
+                                        value={formData2.baseimp || ""}
                                         onChange={handleChange}
                                         min={0}
                                     />
                                 </div>
-                                <div className="flex flex-col w-full gap-2">
-                                    <IVAInput formData={formData} setFormData={setFormData} />
-                                </div>
+                                <IVAInput formData={formData2} setFormData={setFormData} handleChange2={handleChange} />
                                 <div className="flex flex-col w-full gap-2">
                                     <label htmlFor="Costo" className="label is-small">
                                         IVA importe
                                     </label>
-                                    <input
+                                    <Input
                                         className='input'
                                         placeholder="IVA importe"
                                         type="number"
@@ -217,7 +222,7 @@ function ModalEdit({ formData, closeModal, isActive, fetchData, tipo }) {
                                         placeholder="IRPf importe"
                                         type="number"
                                         name="IRPfimp"
-                                        value={(parseFloat(formData2.baseimp || 0) * (parseFloat(formData.IRPf || 0) / 100)).toFixed(2)}
+                                        value={(parseFloat(formData2.baseimp || 0) * (parseFloat(formData2.IRPf || 0) / 100)).toFixed(2)}
                                         readOnly
                                     />
                                 </div>

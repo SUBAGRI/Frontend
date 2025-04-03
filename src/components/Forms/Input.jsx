@@ -62,7 +62,7 @@ export const Input = ({ label, type, name, value, placeholder, onChange, classNa
 const errorTextStyle = {
     display: 'flex',
     alignItems: 'center', // Equivalente a flex items-center
-    gap: '0.25rem', // Equivalente a gap-1
+    gap: '0.25rem', // Equivalente a gap-1 
     paddingLeft: '0.5rem', // Equivalente a px-2
     paddingRight: '0.5rem', // Equivalente a px-2
     fontWeight: '600', // Equivalente a font-semibold
