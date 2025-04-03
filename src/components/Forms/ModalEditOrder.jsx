@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import api from "../../api";
 import { Input } from './Input';
+import IVAInput from "./UtilsForm/InputIVA";
 import { FormProvider, useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
 
@@ -174,18 +175,7 @@ function ModalEdit({ formData, closeModal, isActive, fetchData, tipo }) {
                                     />
                                 </div>
                                 <div className="flex flex-col w-full gap-2">
-                                    <label htmlFor="Costo" className="label is-small">
-                                        IVA
-                                    </label>
-                                    <input
-                                        className='input'
-                                        placeholder="IVA"
-                                        type="number"
-                                        name="IVA"
-                                        value={formData2.IVA || 0}
-                                        onChange={handleChange}
-                                        min={0}
-                                    />
+                                    <IVAInput formData={formData} setFormData={setFormData} />
                                 </div>
                                 <div className="flex flex-col w-full gap-2">
                                     <label htmlFor="Costo" className="label is-small">

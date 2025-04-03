@@ -5,8 +5,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Input } from './Input';
 import IVAInput from "./UtilsForm/InputIVA";
 import Swal from 'sweetalert2';
-import ClienteAutocomplete from './UtilsForm/clienteAutocomplete';
-import ProveedorAutocomplete from './UtilsForm/proveedorAutocomplete';
+import ClienteAutocomplete from './UtilsForm/clienteAutocomplete'
+import ProveedorAutocomplete from './UtilsForm/proveedorAutocomplete'
 
 function FormOrder({ tipo, clientes }) {
     const methods = useForm();
@@ -183,25 +183,23 @@ function FormOrder({ tipo, clientes }) {
                                     />
                                 </div>
                                 <div className="flex flex-col w-full gap-2">
-                                    <label htmlFor="Costo" className="label is-small">
-                                        IVA %
-                                    </label>
-                                    <Input
-                                        className='input'
-                                        placeholder="IVA"
-                                        type="number"
-                                        name="IVA"
-                                        value={formData.IVA || 0}
-                                        onChange={handleChange}
-                                    />
+                                    <IVAInput formData={formData} setFormData={setFormData} />
                                 </div>
                                 <div className="flex flex-col w-full gap-2">
                                     <label htmlFor="Costo" className="label is-small">
                                         IVA importe
                                     </label>
-                                    <IVAInput formData={formData} setFormData={setFormData} />
+                                    <Input
+                                        className='input'
+                                        placeholder="IVA importe"
+                                        type="number"
+                                        name="IVAimp"
+                                        value={(parseFloat(formData.baseimp || 0) * (parseFloat(formData.IVA || 0) / 100)).toFixed(2)}
+                                        readOnly
+                                        min={0}
+                                    />
                                 </div>
-                            </div>  
+                            </div>
 
                             <div className="field mb-4 is-grouped" style={{ justifyContent: 'space-between' }}>
                                 <div className="flex flex-col w-full gap-2">
