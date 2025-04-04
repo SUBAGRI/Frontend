@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import {ModifyExcel} from '../templates/Factura'
+import {DescargarPacking} from '../templates/Packinglist'
+import {generateDocument} from '../templates/Humedad'
 
 const ClientForm = () => {
   // Estado para los datos del formulario
@@ -7,9 +9,8 @@ const ClientForm = () => {
     cliente: '',
     numeroFactura: '',
     fechaFactura: '',
-    numeroBultos: '',
     numeroCamiones: 1,
-    camiones: [{ matriculaRemolque: '', matriculaTractora: '', kilos: '', tipoPaja: '' }],
+    camiones: [{ matriculaRemolque: '', matriculaTractora: '', kilos: '', tipoPaja: '', numeroBultos: 1 }],
     facturaReal: '', // Agregamos la propiedad para Factura Real
   });
 
@@ -85,6 +86,8 @@ const ClientForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await ModifyExcel(formData);
+    await DescargarPacking(formData)
+    await generateDocument()
     console.log(formData);
     
   };
@@ -189,28 +192,6 @@ const ClientForm = () => {
           />
         </div>
 
-        {/* Número de bultos */}
-        <div className="flex flex-col w-full gap-2">
-          <label htmlFor="numeroBultos" className="label is-small" style={{ marginBottom: '5.25px' }}>
-            Número de Bultos
-          </label>
-          <input
-            type="number"
-            id="numeroBultos"
-            name="numeroBultos"
-            value={formData.numeroBultos}
-            onChange={handleChange}
-            className="input"
-            style={{
-              border: '1px solid #ccc',
-              padding: '8px',
-              borderRadius: '4px',
-              width: '100%',
-              maxWidth: '400px', // Tamaño máximo del input
-            }}
-          />
-        </div>
-
         {/* Número de camiones */}
         <div className="flex flex-col w-full gap-2">
           <label htmlFor="numeroCamiones" className="label is-small" style={{ marginBottom: '5.25px' }}>
@@ -263,7 +244,7 @@ const ClientForm = () => {
         {formData.camiones.map((camion, index) => (
           <div key={index} className="flex flex-col w-full gap-2 border-t pt-4">
             <h4 className="text-lg font-medium text-gray-800 mb-4">Camión {index + 1}</h4>
-            <div className="field mb-4 is-grouped" style={{ justifyContent: 'space-evenly', maxWidth: '700px' }}>
+            <div className="field mb-4 is-grouped" style={{ justifyContent: 'space-evenly', maxWidth: '800px' }}>
               <div className="flex flex-col w-1/3 gap-2">
                 <label htmlFor={`matriculaRemolque-${index}`} className="label">
                   Matrícula Remolque
@@ -349,6 +330,26 @@ const ClientForm = () => {
               </select>
             </div>
 
+            <div className="flex flex-col w-1/3 gap-2">
+                <label htmlFor={`numeroBultos-${index}`} className="label">
+                    Pacas
+                </label>
+                <input
+                  type="number"
+                  id={`numeroBultos-${index}`}
+                  name="numeroBultos"
+                  value={camion.numeroBultos}
+                  onChange={(e) => handleCamionChange(index, e)}
+                  className="input"
+                  style={{
+                    border: '1px solid #ccc',
+                    padding: '8px',
+                    borderRadius: '4px',
+                    width: '100%',
+                  }}
+                />
+              </div>
+
             </div>
           </div>
         ))}
@@ -357,8 +358,9 @@ const ClientForm = () => {
           type="submit"
           className="mt-6 bg-blue-500 text-white py-2 px-4 rounded-lg w-full"
         >
-          Enviar
+          Descargar documentacion
         </button>
+
       </form>
     </div>
   );
