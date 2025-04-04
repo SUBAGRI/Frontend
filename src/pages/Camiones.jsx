@@ -7,14 +7,14 @@ const ClientForm = () => {
     cliente: '',
     numeroFactura: '',
     fechaFactura: '',
-    tipoPaja: '',
     numeroBultos: '',
     numeroCamiones: 1,
-    camiones: [{ matriculaRemolque: '', matriculaTractora: '', kilos: '' }],
+    camiones: [{ matriculaRemolque: '', matriculaTractora: '', kilos: '', tipoPaja: '' }],
+    facturaReal: '', // Agregamos la propiedad para Factura Real
   });
 
   // Lista de clientes (puedes cargarla dinámicamente)
-  const clientes = ['STE PROJ FRIO SARL', 'Cliente 2', 'Cliente 3'];
+  const clientes = ['STE PROJ FRIO SARL', 'STE VOYAGE BOUHAOUI', 'ALF SMARA', 'THANKS GLOBAL', "SOCIETE FRERES CHERGUIA", "LYAQOUTI AGRO SARL", "SOCIETE INES Y HENOS SARL AU"];
 
   // Lista de tipos de paja
   const tiposDePaja = ['Heno de avena', 'Guisante', 'Imabe', 'Jovisa', 'Paquete pequeño'];
@@ -22,11 +22,30 @@ const ClientForm = () => {
   // Función para manejar el cambio en cualquier campo del formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+
+    setFormData((prevData) => {
+        const cliente = name === "cliente" ? value : prevData.cliente;
+        const shouldResetFacturaReal = (
+            cliente !== 'STE PROJ FRIO SARL' &&
+            cliente !== 'STE VOYAGE BOUHAOUI'
+        );
+
+        return {
+            ...prevData,
+            [name]: value,
+            facturaReal: shouldResetFacturaReal ? '' : prevData.facturaReal,
+        };
+    });
+};
+
+    // Función para manejar el cambio en el "Factura Real"
+    const handleFacturaRealChange = (e) => {
+        const { value } = e.target;
+        setFormData((prevData) => ({
+          ...prevData,
+          facturaReal: value,
+        }));
+      };
 
   // Función para manejar cambios en los inputs de los camiones
   const handleCamionChange = (index, e) => {
@@ -100,6 +119,31 @@ const ClientForm = () => {
             ))}
           </select>
         </div>
+            
+        {(formData.cliente === "STE VOYAGE BOUHAOUI" || formData.cliente === "STE PROJ FRIO SARL") && (
+          <div className="flex flex-col w-full gap-2">
+            <label htmlFor="facturaReal" className="label is-small" style={{ marginBottom: '5.25px' }}>
+              Factura Real
+            </label>
+            <select
+              name="facturaReal"
+              value={formData.facturaReal}
+              onChange={handleFacturaRealChange}
+              className="input"
+              style={{
+                border: '1px solid #ccc',
+                padding: '8px',
+                borderRadius: '4px',
+                width: '100%',
+                maxWidth: '400px',
+              }}
+            >
+              <option value="">Selecciona una opción</option>
+              <option value="si">Si</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+        )}
 
         {/* Número de factura */}
         <div className="flex flex-col w-full gap-2">
@@ -143,33 +187,6 @@ const ClientForm = () => {
               maxWidth: '400px', // Tamaño máximo del input
             }}
           />
-        </div>
-
-        {/* Tipo de Paja */}
-        <div className="flex flex-col w-full gap-2">
-          <label htmlFor="tipoPaja" className="label is-small" style={{ marginBottom: '5.25px' }}>
-            Tipo de Paja
-          </label>
-          <select
-            name="tipoPaja"
-            value={formData.tipoPaja}
-            onChange={handleChange}
-            className="input"
-            style={{
-              border: '1px solid #ccc',
-              padding: '8px',
-              borderRadius: '4px',
-              width: '100%',
-              maxWidth: '400px', // Tamaño máximo del input
-            }}
-          >
-            <option value="">Selecciona un tipo de paja</option>
-            {tiposDePaja.map((tipo) => (
-              <option key={tipo} value={tipo}>
-                {tipo}
-              </option>
-            ))}
-          </select>
         </div>
 
         {/* Número de bultos */}
@@ -304,6 +321,34 @@ const ClientForm = () => {
                   }}
                 />
               </div>
+
+                  {/* Tipo de Paja */}
+                <div className="flex flex-col w-1/3 gap-2">
+                  <label htmlFor={`tipoPaja-${index}`} className="label">
+                Tipo de Paja
+              </label>
+              <select
+                id={`tipoPaja-${index}`}
+                name="tipoPaja"
+                value={camion.tipoPaja}
+                onChange={(e) => handleCamionChange(index, e)}
+                className="input"
+                style={{
+                  border: '1px solid #ccc',
+                  padding: '8px',
+                  borderRadius: '4px',
+                  width: '100%',
+                }}
+              >
+                <option value="">Selecciona un tipo de paja</option>
+                {tiposDePaja.map((tipo) => (
+                  <option key={tipo} value={tipo}>
+                    {tipo}
+                  </option>
+                ))}
+              </select>
+            </div>
+
             </div>
           </div>
         ))}

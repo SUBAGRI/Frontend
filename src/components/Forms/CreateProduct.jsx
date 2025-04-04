@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Input } from './Input';
 import Swal from 'sweetalert2';
 
-function FormOrderCliente() {
+function FormProduct() {
     const methods = useForm();
     const [formData, setFormData] = useState({});
     const navigate = useNavigate();
@@ -21,14 +21,16 @@ function FormOrderCliente() {
         });
     };
 
+    const TIPO_OPTIONS = ["Venta", "Compra"];
+
     const handleSubmit = methods.handleSubmit(async (e) => {
 
         try {
-            const response = await api.post('/api/clientes/', formData);
+            const response = await api.post('/api/codigoProducto/', formData);
             console.log(response);
             await Swal.fire({   
                 icon: 'success',
-                title: 'Cliente/Proveedor añadido correctamente',
+                title: 'Producto añadido correctamente',
                 text: "¿Quieres añadir otra?.",
                 showCancelButton: true,
                 confirmButtonText: 'Si',
@@ -37,7 +39,7 @@ function FormOrderCliente() {
                 if (result.isConfirmed) {
                     setFormData({})
                     // Navega a la página de inicio actual
-                    navigate('/orders/create/clientes');
+                    navigate('/orders/create/codigoProducto');
                 } else {
                     navigate('/orders');
                 }
@@ -48,7 +50,7 @@ function FormOrderCliente() {
             await Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: "La factura no se ha podido crear",
+                text: "El producto no se ha podido crear",
                 timer: 2000, // Cierra automáticamente después de 3 segundos
                 timerProgressBar: true, // Muestra una barra de progreso mientras cuenta el tiempo
             });
@@ -61,7 +63,7 @@ function FormOrderCliente() {
                 <div className="column is-8-tablet is-7-desktop is-6-widescreen">
                     {/* Encabezado con botón "Back to Home" e icono de home */}
                     <div className="is-flex is-justify-content-space-between">
-                        <h2 className="title is-2">Añadir cliente/Proveedor</h2>
+                        <h2 className="title is-2">Añadir producto</h2>
                         <Link to="/orders" className="button is-link is-small px-5" style={{ height: '50px' }}>
                             <span className="icon">
                                 <i className="fas fa-home"></i>
@@ -77,10 +79,10 @@ function FormOrderCliente() {
                         
                             <div className="field mb-4">
                                 <Input
-                                    label="Nombre"
+                                    label="Producto"
                                     type="text"
                                     name="nombre"
-                                    placeholder="Nombre"
+                                    placeholder="Producto"
                                     value={formData.nombre || ''}
                                     onChange={handleChange}
                                 />
@@ -88,29 +90,14 @@ function FormOrderCliente() {
 
                             <div className="field mb-4">
                                 <label htmlFor="Telefono" className="label is-small">
-                                    Telefono
+                                    Codigo
                                 </label>
                                 <input
                                     className='input'
                                     type="text"
-                                    name="tel"
-                                    placeholder="Telefono"
-                                    value={formData.tel || ''}
-                                    onChange={handleChange}
-                                    pattern="[0-9]*"
-                                />
-                            </div>
-
-                            <div className="field mb-4">
-                                <label htmlFor="Direccion" className="label is-small">
-                                    Direccion
-                                </label>
-                                <input
-                                    className='input'
-                                    type="text"
-                                    name="direccion"
-                                    placeholder="Direccion"
-                                    value={formData.direccion || ''}
+                                    name="codigo"
+                                    placeholder="Codigo"
+                                    value={formData.codigo || ''}
                                     onChange={handleChange}
                                 />
                             </div>
@@ -119,30 +106,22 @@ function FormOrderCliente() {
                             <div className="field mb-4 is-grouped" style={{ justifyContent: 'space-between' }}>
                                 <div className="flex flex-col w-full gap-2">
                                     <label htmlFor="Pezzo" className="label is-small">
-                                        CIF
+                                        Tipo
                                     </label>
-                                    <Input
-                                        className='input'
-                                        type="text"
-                                        name="cif"
-                                        placeholder="CIF"
-                                        value={formData.cif || ""}
+                                    <select
+                                        type="input"
+                                        className="input" 
+                                        name="tipo"
+                                        value={formData.tipo || ""}
                                         onChange={handleChange}
-                                    />
-                                </div>
-                                <div className="flex flex-col w-full gap-2">
-                                    <label htmlFor="Costo" className="label is-small">
-                                        C.P
-                                    </label>
-                                    <Input
-                                        className='input'
-                                        placeholder="Codigo Postal"
-                                        type="number"
-                                        name="cp"
-                                        value={formData.cp || 0}
-                                        onChange={handleChange}
-                                        maxWidth={5}
-                                    />
+                                        >
+                                        <option value="">Selecciona Tipo</option>
+                                        {TIPO_OPTIONS.map((option) => (
+                                            <option key={option} value={option}>
+                                            {option}
+                                            </option>
+                                        ))}
+                                        </select>
                                 </div>
                             </div>
                             
@@ -159,4 +138,4 @@ function FormOrderCliente() {
     );
 }
 
-export default FormOrderCliente;
+export default FormProduct;

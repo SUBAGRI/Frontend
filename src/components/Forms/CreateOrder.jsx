@@ -7,8 +7,9 @@ import IVAInput from "./UtilsForm/InputIVA";
 import Swal from 'sweetalert2';
 import ClienteAutocomplete from './UtilsForm/clienteAutocomplete'
 import ProveedorAutocomplete from './UtilsForm/proveedorAutocomplete'
+import ProductoAutocomplete from './UtilsForm/productoAutocomplete';
 
-function FormOrder({ tipo, clientes }) {
+function FormOrder({ tipo, clientes, productos }) {
     const methods = useForm();
     const [formData, setFormData] = useState({});
     const navigate = useNavigate();
@@ -135,8 +136,9 @@ function FormOrder({ tipo, clientes }) {
                     </div>
 
                     <FormProvider {...methods}>
-                        <form onSubmit={e => e.preventDefault()} noValidate className="box p-5">
+                        <form autoComplete="off" onSubmit={e => e.preventDefault()} noValidate className="box p-5">
                             {/* Formulario */}
+                            <input autoComplete="off" name="hidden" type="text" style={{display:"none"}}></input>
                             <div className="field mb-4 is-grouped" style={{justifyContent:'space-between'}}>
                                 <Input
                                     label="Fecha"
@@ -165,6 +167,9 @@ function FormOrder({ tipo, clientes }) {
                                 ) : (
                                     <ProveedorAutocomplete formData={formData} setFormData={setFormData} clientes={clientes} />
                                 )}
+                            </div>
+                            <div className="field mb-4">
+                                <ProductoAutocomplete formData={formData} setFormData={setFormData} productos={productos} />
                             </div>
 
                             {/* Campos de "Pezzo" y "Costo" en el mismo div */}

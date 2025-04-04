@@ -42,6 +42,12 @@ function App() {
             <CreateOrder tipo='clientes' />
           </ProtectedRoute>
         } />
+
+        <Route path="/orders/create/productos" element={
+          <ProtectedRoute>
+            <CreateOrder tipo='productos' />
+          </ProtectedRoute>
+        } />
         
         <Route path="/orders" element={
           <ProtectedRoute>

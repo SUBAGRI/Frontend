@@ -235,12 +235,20 @@ function Header({ orders, originalOrders, setOrders, fetchData,
                                                                         navTab={navTab}
                                                                     />
                                                                 </div>
-                                                                <div className="column">
+                                                                <div className="column" style={{maxWidth:'220px'}}>
                                                                     <Link className="button is-success" to="/orders/create/clientes">
                                                                         <span className="icon">
                                                                             <i className="fas fa-plus-circle"></i>
                                                                         </span>
                                                                         <span>Añadir cliente/proveedor</span>
+                                                                    </Link>
+                                                                </div>
+                                                                <div className="column">
+                                                                    <Link className="button is-success" to="/orders/create/productos">
+                                                                        <span className="icon">
+                                                                            <i className="fas fa-plus-circle"></i>
+                                                                        </span>
+                                                                        <span>Añadir producto</span>
                                                                     </Link>
                                                                 </div>
                                                             </div>

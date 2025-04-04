@@ -37,19 +37,44 @@ const ProveedorAutocomplete = ({ formData, setFormData, clientes }) => {
                 placeholder="Proveedor"
                 value={formData.cliente || ""}
                 onChange={handleChange}
+                autoComplete="nope"
             />
             {showSuggestions && (
-                <ul className="absolute bg-white border border-gray-300 w-full mt-1 rounded shadow-lg z-10">
-                    {filteredClientes.map((cliente, index) => (
-                        <li
-                            key={index}
-                            className="p-2 hover:bg-gray-200 cursor-pointer"
-                            onClick={() => handleSelect(cliente.nombre)}
-                        >
-                            {cliente.nombre}
-                        </li>
-                    ))}
-                </ul>
+                <div
+                style={{
+                    position: "absolute",
+                    top: "47.5%",
+                    left: 280,
+                    width: "44.5%",
+                    backgroundColor: "#fff",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                    maxHeight: "160px",
+                    overflowY: "auto",
+                    zIndex: 10,
+                }}
+            >
+                {filteredClientes.map((cliente, index) => (
+                    <div
+                        key={index}
+                        onClick={() => handleSelect(cliente.nombre)}
+                        style={{
+                            padding: "8px",
+                            cursor: "pointer",
+                            backgroundColor: "#fff",
+                        }}
+                        onMouseEnter={(e) => {
+                            e.target.style.backgroundColor = "#f0f0f0";
+                        }}
+                        onMouseLeave={(e) => {
+                            e.target.style.backgroundColor = "#fff";
+                        }}
+                    >
+                        {cliente.nombre}
+                    </div>
+                ))}
+            </div>
             )}
         </div>
     );

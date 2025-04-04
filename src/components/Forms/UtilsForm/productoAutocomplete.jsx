@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { Input } from "../Input";
 
-const ClienteAutocomplete = ({ formData, setFormData, clientes }) => {
+const ProductoAutocomplete = ({ formData, setFormData, productos }) => {
     const [filteredClientes, setFilteredClientes] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
 
     const handleChange = (e) => {
         const searchValue = e.target.value;
-        setFormData({ ...formData, cliente: searchValue });
+        setFormData({ ...formData, producto: searchValue });
 
         if (searchValue.length === 0) {
             setShowSuggestions(false);
             return;
         }
 
-        const filtered = clientes.filter((cliente) =>
-            cliente.nombre.toLowerCase().includes(searchValue.toLowerCase())
+        const filtered = productos.filter((producto) =>
+            producto.nombre.toLowerCase().includes(searchValue.toLowerCase())
         );
 
         setFilteredClientes(filtered);
@@ -23,27 +23,27 @@ const ClienteAutocomplete = ({ formData, setFormData, clientes }) => {
     };
 
     const handleSelect = (nombre) => {
-        setFormData({ ...formData, cliente: nombre });
+        setFormData({ ...formData, producto: nombre });
         setShowSuggestions(false);
     };
 
     return (
         <div className="relative">
             <Input
-                label="Cliente"
+                label="Producto"
                 className="input"
-                type="input"
-                name="cliente"
-                placeholder="Cliente"
-                value={formData.cliente || ""}
+                type="text"
+                name="producto"
+                placeholder="Producto"
+                value={formData.producto || ""}
                 onChange={handleChange}
-                autoComplete="false"
+                autoComplete="off"
             />
             {showSuggestions && (
                 <div
                 style={{
                     position: "absolute",
-                    top: "47.5%",
+                    top: "57%",
                     left: 280,
                     width: "44.5%",
                     backgroundColor: "#fff",
@@ -55,10 +55,10 @@ const ClienteAutocomplete = ({ formData, setFormData, clientes }) => {
                     zIndex: 10,
                 }}
             >
-                {filteredClientes.map((cliente, index) => (
+                {filteredClientes.map((producto, index) => (
                     <div
                         key={index}
-                        onClick={() => handleSelect(cliente.nombre)}
+                        onClick={() => handleSelect(producto.nombre)}
                         style={{
                             padding: "8px",
                             cursor: "pointer",
@@ -71,7 +71,7 @@ const ClienteAutocomplete = ({ formData, setFormData, clientes }) => {
                             e.target.style.backgroundColor = "#fff";
                         }}
                     >
-                        {cliente.nombre}
+                        {producto.nombre}
                     </div>
                 ))}
             </div>
@@ -80,4 +80,4 @@ const ClienteAutocomplete = ({ formData, setFormData, clientes }) => {
     );
 };
 
-export default ClienteAutocomplete;
+export default ProductoAutocomplete;
