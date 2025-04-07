@@ -118,6 +118,7 @@ function Order({ orders, fetchData, tableTab }) {
                     <th style={style}>Fecha</th>
                     <th style={style}>Nº Factura</th>
                     <th style={style}>Cliente</th>
+                    <th style={style}>Producto</th>
                     <th style={style}>Base imp.</th>
                     <th style={style}>IVA</th>
                     <th style={style}>Importe IVA</th>
@@ -135,6 +136,7 @@ function Order({ orders, fetchData, tableTab }) {
                                 <td>{formatDate(order.fecha)}</td>
                                 <td>{order.numfac}</td>
                                 <td>{order.cliente}</td>
+                                <td>{order.producto}</td>
                                 <td>{order.baseimp} €</td>    
                                 <td>{order.IVA} %</td>
                                 <td>{order.IVAimp} €</td>
@@ -153,20 +155,7 @@ function Order({ orders, fetchData, tableTab }) {
                                     </button>
                                     {setIsModalActive && <ModalEdit isActive={isModalActive}
                                         closeModal={() => setIsModalActive(false)} formData={order} tipo='facturas' />}
-                                    {
-                                        // Si el pedido está terminado, muestra un botón para volver a ponerlo como no terminado
-                                        order.finished && (
-                                            <button
-                                                className="fa fa-undo" // Clase CSS para el ícono de deshacer (o similar)
-                                                style={{ color: "#E06D5B" }} // Puedes elegir un color diferente
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    handleChoice(order)
-                                                }} // Llama a la función handleUnfinishedOrder al hacer clic
-                                            >
-                                            </button>
-                                        )
-                                    }
+                                    
                                 </td>
                             </tr>
 

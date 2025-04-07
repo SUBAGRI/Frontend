@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import {ModifyExcel} from '../templates/Factura'
 import {DescargarPacking} from '../templates/Packinglist'
-import {generateDocument} from '../templates/Humedad'
+import {generateHumedad} from '../templates/Humedad'
+import {generateAnexo} from '../templates/Anexo'
 
 const ClientForm = () => {
   // Estado para los datos del formulario
@@ -85,9 +86,10 @@ const ClientForm = () => {
   // Manejar el envío del formulario (por ahora solo logueamos los datos)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await ModifyExcel(formData);
-    await DescargarPacking(formData)
-    await generateDocument()
+    //await ModifyExcel(formData);
+    //await DescargarPacking(formData);
+    await generateHumedad(formData);
+    await generateAnexo(formData);
     console.log(formData);
     
   };
