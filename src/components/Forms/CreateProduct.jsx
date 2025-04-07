@@ -39,7 +39,7 @@ function FormProduct() {
                 if (result.isConfirmed) {
                     setFormData({})
                     // Navega a la página de inicio actual
-                    navigate('/orders/create/codigoProducto');
+                    navigate('/orders/create/productos');
                 } else {
                     navigate('/orders');
                 }
