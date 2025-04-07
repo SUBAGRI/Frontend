@@ -3,7 +3,7 @@ import Docxtemplater from "docxtemplater";
 import { saveAs } from "file-saver";
 
 // Función para cargar la plantilla y generar el archivo modificado
-export const generateExportador = async (formData) => {
+export const generateResiduos = async (formData) => {
     try {
 
         // Cargar el archivo de plantilla

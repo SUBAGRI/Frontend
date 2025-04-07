@@ -4,7 +4,7 @@ import {DescargarPacking} from '../templates/Packinglist'
 import {generateHumedad} from '../templates/Humedad'
 import {generateAnexo} from '../templates/Anexo'
 import {generateExportador } from '../templates/Exportador';
-import { generateResiduos } from '../templates/Residuos';
+import {generateResiduos} from '../templates/Residuos';
 
 const ClientForm = () => {
   // Estado para los datos del formulario
