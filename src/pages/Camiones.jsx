@@ -3,6 +3,8 @@ import {ModifyExcel} from '../templates/Factura'
 import {DescargarPacking} from '../templates/Packinglist'
 import {generateHumedad} from '../templates/Humedad'
 import {generateAnexo} from '../templates/Anexo'
+import {generateExportador } from '../templates/Exportador';
+import { generateResiduos } from '../templates/Residuos';
 
 const ClientForm = () => {
   // Estado para los datos del formulario
@@ -86,10 +88,12 @@ const ClientForm = () => {
   // Manejar el envío del formulario (por ahora solo logueamos los datos)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    //await ModifyExcel(formData);
-    //await DescargarPacking(formData);
+    await ModifyExcel(formData);
+    await DescargarPacking(formData);
     await generateHumedad(formData);
     await generateAnexo(formData);
+    await generateExportador(formData);
+    await generateResiduos(formData);
     console.log(formData);
     
   };
