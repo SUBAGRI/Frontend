@@ -22,7 +22,7 @@ export const generateResiduos = async (formData) => {
         const fechaFormateada = `${day}-${month}-${year}`;
 
         // Rellenar datos en el documento
-        doc.render({ factura: formData.numeroFactura, dia: day, mes: mesEscrito });
+        doc.render({ factura: formData.numeroFactura, dia: day, mes: mesEscrito.toUpperCase() });
 
         // Generar el archivo Word
         const output = doc.getZip().generate({ type: "blob" });

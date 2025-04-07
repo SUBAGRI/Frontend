@@ -198,7 +198,7 @@ export const ModifyExcel = async ( formData ) => {
           workbook.worksheets.forEach((ws, index) => {
             if (index !== formData.numeroCamiones - 1) {
                 workbook.removeWorksheet(ws);
-            }
+            } 
         });
 
         // 6. Guardar el archivo modificado y descargarlo
