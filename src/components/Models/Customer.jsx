@@ -6,70 +6,30 @@ import "../../styles/Notification.css"
 
 //Facturas recibidas
 
-function Customer({ facturasrec, fetchData, tableTab }) {
+function Customer({ facturasrec, fetchData, tableTab, clientes, productos }) {
     // Estado de la expansión de cada fila
     const [expandedRows, setExpandedRows] = useState({});
     // Estado del modal de edición
     const [isModalActive, setIsModalActive] = useState(false);
-    // Estado de los pedidos según su estado
-    const [unfinishedOrders, setUnfinishedOrders] = useState([]);
-    const [finishedOrders, setFinishedOrders] = useState([]);
-    // Estados para recordar la página actual de cada pestaña 
-    const [currentPageUnfinished, setCurrentPageUnfinished] = useState(1);
-    const [currentPageFinished, setCurrentPageFinished] = useState(1);
+
+    const [currentPage, setCurrentPage] = useState(1);
 
     // Número de pedidos por página
     const ordersPerPage = 15;
 
-    // Obtener pedidos actuales según la pestaña
-    const currentUnfinishedOrders = unfinishedOrders.slice((currentPageUnfinished - 1) * ordersPerPage, currentPageUnfinished * ordersPerPage);
-    const currentFinishedOrders = finishedOrders.slice((currentPageFinished - 1) * ordersPerPage, currentPageFinished * ordersPerPage);
-
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const [isDarkMode, setIsDarkMode] = useState(darkModeMediaQuery.matches);
-
-    // Filtrar los pedidos según su estado
-    useEffect(() => {
-        if (Array.isArray(facturasrec)) {
-            const unfinished = facturasrec.filter(order => !order.finished);
-            const finished = facturasrec.filter(order => order.finished);
-            setUnfinishedOrders(unfinished);
-            setFinishedOrders(finished);
-        } else {
-            setUnfinishedOrders([]);
-            setFinishedOrders([]);
-        }
-    }, [facturasrec]);
-
-    useEffect(() => {
-        // Función de callback que se ejecuta cuando cambia la preferencia de esquema de color
-        const handleColorSchemeChange = (event) => {
-            setIsDarkMode(event.matches);
-        };
-
-        // Añadir el evento de escucha a darkModeMediaQuery
-        darkModeMediaQuery.addEventListener('change', handleColorSchemeChange);
-
-        // Limpiar el evento de escucha cuando el componente se desmonte
-        return () => {
-            darkModeMediaQuery.removeEventListener('change', handleColorSchemeChange);
-        };
-    }, []);
-
+    
+    // Calcular el índice del primer y último pedido de la página actual
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    
+    // Obtener los prdocutso de la página actual
+    const currentFacturasRed = facturasrec.slice(indexOfFirstOrder, indexOfLastOrder);
 
     // Formatear fecha
     const formatDate = (dateString) => {
         const options = { day: 'numeric', month: 'short', year: 'numeric' };
         return new Date(dateString).toLocaleDateString("it-IT", options);
     };
-
-    // Estado de los pedidos enviados
-    const shippedStatus = {
-        0: "Not shipped",
-        1: "Shipped",
-        2: "In shop"
-    };
-
 
     // Alternar la expansión de una fila específica
     const handleRowClick = (idOrder) => {
@@ -95,22 +55,14 @@ function Customer({ facturasrec, fetchData, tableTab }) {
     }, [expandedRows]);
 
     // Manejar el cambio de página
-    const handlePaginate = (pageNumber) => {
-        if (tableTab === 'unfinished') {
-            setCurrentPageUnfinished(pageNumber);
-        } else if (tableTab === 'finished') {
-            setCurrentPageFinished(pageNumber);
-        }
-    };
-
-    // Cuando se cambie de pestaña, restablecer la página actual de la pestaña
-    useEffect(() => {
-        if (tableTab === 'unfinished') {
-            setCurrentPageUnfinished(1);
-        } else if (tableTab === 'finished') {
-            setCurrentPageFinished(1);
-        }
-    }, [tableTab]);
+        const handlePaginate = (pageNumber) => {
+            setCurrentPage(pageNumber)
+        };
+    
+        // Cuando se cambie de pestaña, restablecer la página actual de la pestaña
+        useEffect(() => {
+            setCurrentPage(1)
+        }, [tableTab]);
 
     return (
         <div>
@@ -129,7 +81,7 @@ function Customer({ facturasrec, fetchData, tableTab }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {(currentUnfinishedOrders).map((facturaRec) => (
+                    {(currentFacturasRed).map((facturaRec) => (
                         <React.Fragment key={facturaRec.idOrder}>
                             {/* Fila principal */}
                             <tr onClick={() => handleRowClick(facturaRec.idOrder)} style={{ cursor: "pointer" }}>
@@ -153,7 +105,7 @@ function Customer({ facturasrec, fetchData, tableTab }) {
                                     >
                                     </button>
                                     {setIsModalActive && <ModalEdit isActive={isModalActive}
-                                        closeModal={() => setIsModalActive(false)} formData={facturaRec} tipo='facturasrec' />}
+                                        closeModal={() => setIsModalActive(false)} formData={facturaRec} tipo='facturasrec' clientes={clientes} productos={productos} />}
                                     {
                                         // Si el pedido está terminado, muestra un botón para volver a ponerlo como no terminado
                                         facturaRec.finished && (
@@ -179,9 +131,9 @@ function Customer({ facturasrec, fetchData, tableTab }) {
             {/* Paginación */}
             <Pagination
                 ordersPerPage={ordersPerPage}
-                totalOrders={tableTab === 'unfinished' ? unfinishedOrders.length : finishedOrders.length}
+                totalOrders={facturasrec.length}
                 paginate={handlePaginate}
-                activePage={tableTab === 'unfinished' ? currentPageUnfinished : currentPageFinished}
+                activePage={currentPage}
             />
         </div>
     );

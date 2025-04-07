@@ -7,10 +7,12 @@ import Customer from "../Models/Customer";
 import Cliente from "../Models/Cliente"
 import Searchbar from "../Utils/SearchBar";
 import * as XSLX from 'xlsx';
+import Producto from "../Models/Producto";
 
 function Header({ orders, originalOrders, setOrders, fetchData, 
     factrec, originalFacturasRec, setFacturasRec, fetchDataFactRec, 
-    clientes, originalClientes, setClientes, fetchDataClientes, sitio }) {
+    clientes, originalClientes, setClientes, fetchDataClientes, sitio,
+    productos, originalProductos, setProductos, fetchDataProductos }) {
     const [navTab, setNavTab] = useState("pane-1");
     const [tableTab, setTableTab] = useState("unfinished");
     const [isMenuActive, setIsMenuActive] = useState(false);
@@ -125,7 +127,7 @@ function Header({ orders, originalOrders, setOrders, fetchData,
 
                 </div>
                 <div className="container m-1 has-text-right">
-                    <p className="title">{sitio}</p>
+                    <p className="title">Agricola Atienza</p>
                 </div>
             </section>
 
@@ -163,6 +165,16 @@ function Header({ orders, originalOrders, setOrders, fetchData,
                                 <span>Proveedores/Clientes</span>
                             </a>
                         </li>
+                        <li onClick={() => {setNavTab("pane-4");
+                                            setSitio("Productos");
+                        }} className={navTab === "pane-4" ? "is-active" : ""}>
+                            <a>
+                                <span className="icon is-small">
+                                    <i className="fa fa-product"></i>
+                                </span>
+                                <span>Productos</span>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
 
@@ -197,7 +209,7 @@ function Header({ orders, originalOrders, setOrders, fetchData,
                                                         </div>
 
                                                         <div className="table-container is-justify-content-center mb-6">
-                                                            <Order orders={orders} fetchData={fetchData} tableTab={tableTab} />
+                                                            <Order orders={orders} fetchData={fetchData} tableTab={tableTab} clientes={clientes} productos={productos}/>
                                                         </div>
                                                     </div>
                                                 );
@@ -222,7 +234,7 @@ function Header({ orders, originalOrders, setOrders, fetchData,
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    <Customer facturasrec={factrec} fetchData={fetchDataFactRec} tableTab={tableTab} />
+                                                    <Customer facturasrec={factrec} fetchData={fetchDataFactRec} tableTab={tableTab} clientes={clientes} productos={productos}/>
                                                 </div>;
                                             case "pane-3":
                                                 return <div>
@@ -235,13 +247,28 @@ function Header({ orders, originalOrders, setOrders, fetchData,
                                                                         navTab={navTab}
                                                                     />
                                                                 </div>
-                                                                <div className="column" style={{maxWidth:'220px'}}>
+                                                                <div className="column">
                                                                     <Link className="button is-success" to="/orders/create/clientes">
                                                                         <span className="icon">
                                                                             <i className="fas fa-plus-circle"></i>
                                                                         </span>
                                                                         <span>Añadir cliente/proveedor</span>
                                                                     </Link>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <Cliente clientes={clientes} fetchData={fetchDataClientes} tableTab={tableTab} />
+                                                </div>;
+                                            case "pane-4":
+                                                return <div>
+                                                    <div className="columns">
+                                                            <div className="columns control ml-auto">
+                                                                <div className="column ">
+                                                                    <Searchbar
+                                                                        originalOrders={originalProductos}
+                                                                        setOrders={setProductos}
+                                                                        navTab={navTab}
+                                                                    />
                                                                 </div>
                                                                 <div className="column">
                                                                     <Link className="button is-success" to="/orders/create/productos">
@@ -253,7 +280,7 @@ function Header({ orders, originalOrders, setOrders, fetchData,
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    <Cliente clientes={clientes} fetchData={fetchDataClientes} tableTab={tableTab} />
+                                                    <Producto productos={productos} fetchData={fetchDataProductos} tableTab={tableTab} />
                                                 </div>;
                                             default:
                                                 return null;

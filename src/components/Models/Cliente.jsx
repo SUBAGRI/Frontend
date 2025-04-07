@@ -12,50 +12,18 @@ function Cliente({ clientes, fetchData, tableTab }) {
     const [expandedRows, setExpandedRows] = useState({});
     // Estado del modal de edición
     const [isModalActive, setIsModalActive] = useState(false);
-    // Estado de los pedidos según su estado
-    const [unfinishedOrders, setUnfinishedOrders] = useState([]);
-    const [finishedOrders, setFinishedOrders] = useState([]);
-    // Estados para recordar la página actual de cada pestaña 
-    const [currentPageUnfinished, setCurrentPageUnfinished] = useState(1);
-    const [currentPageFinished, setCurrentPageFinished] = useState(1);
+
+    const [currentPage, setCurrentPage] = useState(1);
 
     // Número de pedidos por página
     const ordersPerPage = 15;
 
-    // Obtener pedidos actuales según la pestaña
-    const currentUnfinishedOrders = unfinishedOrders.slice((currentPageUnfinished - 1) * ordersPerPage, currentPageUnfinished * ordersPerPage);
-    const currentFinishedOrders = finishedOrders.slice((currentPageFinished - 1) * ordersPerPage, currentPageFinished * ordersPerPage);
-
-    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const [isDarkMode, setIsDarkMode] = useState(darkModeMediaQuery.matches);
-
-    // Filtrar los pedidos según su estado
-    useEffect(() => {
-        if (Array.isArray(clientes)) {
-            const unfinished = clientes.filter(order => !order.finished);
-            const finished = clientes.filter(order => order.finished);
-            setUnfinishedOrders(unfinished);
-            setFinishedOrders(finished);
-        } else {
-            setUnfinishedOrders([]);
-            setFinishedOrders([]);
-        }
-    }, [clientes]);
-
-    useEffect(() => {
-        // Función de callback que se ejecuta cuando cambia la preferencia de esquema de color
-        const handleColorSchemeChange = (event) => {
-            setIsDarkMode(event.matches);
-        };
-
-        // Añadir el evento de escucha a darkModeMediaQuery
-        darkModeMediaQuery.addEventListener('change', handleColorSchemeChange);
-
-        // Limpiar el evento de escucha cuando el componente se desmonte
-        return () => {
-            darkModeMediaQuery.removeEventListener('change', handleColorSchemeChange);
-        };
-    }, []);
+    // Calcular el índice del primer y último pedido de la página actual
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    
+    // Obtener los prdocutso de la página actual
+    const currentClientes = clientes.slice(indexOfFirstOrder, indexOfLastOrder);
 
 
     // Formatear fecha
@@ -96,22 +64,14 @@ function Cliente({ clientes, fetchData, tableTab }) {
     }, [expandedRows]);
 
     // Manejar el cambio de página
-    const handlePaginate = (pageNumber) => {
-        if (tableTab === 'unfinished') {
-            setCurrentPageUnfinished(pageNumber);
-        } else if (tableTab === 'finished') {
-            setCurrentPageFinished(pageNumber);
-        }
-    };
-
-    // Cuando se cambie de pestaña, restablecer la página actual de la pestaña
-    useEffect(() => {
-        if (tableTab === 'unfinished') {
-            setCurrentPageUnfinished(1);
-        } else if (tableTab === 'finished') {
-            setCurrentPageFinished(1);
-        }
-    }, [tableTab]);
+        const handlePaginate = (pageNumber) => {
+            setCurrentPage(pageNumber)
+        };
+    
+        // Cuando se cambie de pestaña, restablecer la página actual de la pestaña
+        useEffect(() => {
+            setCurrentPage(1)
+        }, [tableTab]);
 
     return (
         <div>
@@ -126,10 +86,10 @@ function Cliente({ clientes, fetchData, tableTab }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {(currentUnfinishedOrders).map((cliente) => (
+                    {(currentClientes).map((cliente) => (
                         <React.Fragment key={cliente.idCliente}>
                             {/* Fila principal */}
-                            <tr onClick={() => handleRowClick(cliente.idOrder)} style={{ cursor: "pointer" }}>
+                            <tr onClick={() => handleRowClick(cliente.idCliente)} style={{ cursor: "pointer" }}>
                                 <td>{cliente.nombre}</td>
                                 <td>{cliente.cif}</td>
                                 <td>{cliente.direccion} </td>    
@@ -172,9 +132,9 @@ function Cliente({ clientes, fetchData, tableTab }) {
             {/* Paginación */}
             <Pagination
                 ordersPerPage={ordersPerPage}
-                totalOrders={tableTab === 'unfinished' ? unfinishedOrders.length : finishedOrders.length}
+                totalOrders={clientes.length}
                 paginate={handlePaginate}
-                activePage={tableTab === 'unfinished' ? currentPageUnfinished : currentPageFinished}
+                activePage={currentPage}
             />
         </div>
     );

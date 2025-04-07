@@ -11,6 +11,8 @@ function Orders() {
     const [originalFacturasRec, setOriginalFacturasRec] = useState([]);
     const [clientes, setClientes] = useState([]);
     const [originalClientes, setOriginalClientes] = useState([]);
+    const [productos, setProductos] = useState([]);
+    const [originalProductos, setOriginalProductos] = useState([]);
 
     // Importa y usa el custom hook `useErrorAndLogout`
     const showErrorAndLogout = useErrorAndLogout();
@@ -51,8 +53,21 @@ function Orders() {
             })
     }
 
+    const fecthDataProductos = () => {
+        api.get("api/codigoProducto/")
+            .then((res) => {
+                setProductos(res.data);
+                setOriginalProductos(res.data);
+                console.log(res.data)
+            })
+            .catch(() => {
+                showErrorAndLogout();
+            })
+    }
+
     // Carga los datos iniciales
     useEffect(() => {
+        fecthDataProductos();
         fetchData();
         fetchDataFactRec();
         fetchDataClientes();
@@ -63,7 +78,8 @@ function Orders() {
             {/* Componente Header */}
             <Header orders={orders} factrec={facturasRec} originalOrders={originalOrders} originalFacturasRec={originalFacturasRec} 
             setOrders={setOrders} setFacturasRec={setFacturasRec} fetchData={fetchData} fetchDataFactRec={fetchDataFactRec} 
-            clientes={clientes} originalClientes={originalClientes} setClientes={setClientes} fetchDataClientes={fetchDataClientes} />
+            clientes={clientes} originalClientes={originalClientes} setClientes={setClientes} fetchDataClientes={fetchDataClientes} 
+            productos={productos} originalProductos={originalProductos} setProductos={setProductos} fetchDataProductos={fecthDataProductos} />
         </div>
     );
 }

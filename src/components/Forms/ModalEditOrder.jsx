@@ -4,8 +4,11 @@ import { Input } from './Input';
 import IVAInput from "./UtilsForm/InputIVA";
 import { FormProvider, useForm } from 'react-hook-form'
 import Swal from 'sweetalert2'
+import ClienteAutocomplete from './UtilsForm/clienteAutocomplete'
+import ProveedorAutocomplete from './UtilsForm/proveedorAutocomplete'
+import ProductoAutocomplete from './UtilsForm/productoAutocomplete';
 
-function ModalEdit({ formData, closeModal, isActive, fetchData, tipo }) {
+function ModalEdit({ formData, closeModal, isActive, fetchData, tipo, clientes, productos }) {
     const methods = useForm()
     const [formData2, setFormData] = useState({});
     const orderId = formData && formData.idOrder; // Verifica si formData está definido antes de acceder a idOrder
@@ -147,24 +150,13 @@ function ModalEdit({ formData, closeModal, isActive, fetchData, tipo }) {
 
                             <div className="field mb-4">
                                 {tipo === 'facturas' ? (
-                                    <Input
-                                        label="Cliente"
-                                        type="text"
-                                        name="cliente"
-                                        placeholder="Cliente"
-                                        value={formData2.cliente || ''}
-                                        onChange={handleChange}
-                                    />
+                                    <ClienteAutocomplete formData={formData} setFormData={setFormData} clientes={clientes} />
                                 ) : (
-                                    <Input
-                                        label="Proveedor"
-                                        type="text"
-                                        name="proveedor"
-                                        placeholder="Proveedor"
-                                        value={formData2.proveedor || ''}
-                                        onChange={handleChange}
-                                    />
+                                    <ProveedorAutocomplete formData={formData} setFormData={setFormData} clientes={clientes} />
                                 )}
+                            </div>
+                            <div className="field mb-4">
+                            <ProductoAutocomplete formData={formData} setFormData={setFormData} productos={productos} />
                             </div>
                             <div className="field mb-2 is-grouped" style={{ justifyContent: 'space-evenly' }}>
                                 <div className="flex flex-col w-full gap-1">
