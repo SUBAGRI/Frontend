@@ -194,6 +194,13 @@ export const ModifyExcel = async ( formData ) => {
           worksheet.getCell(`G${modelo046row}`).value = 26.33
         }
 
+         // 5. Eliminar las otras hojas que no se usan
+          workbook.worksheets.forEach((ws, index) => {
+            if (index !== formData.numeroCamiones - 1) {
+                workbook.removeWorksheet(ws);
+            }
+        });
+
         // 6. Guardar el archivo modificado y descargarlo
         const blob = await workbook.xlsx.writeBuffer();
         saveAs(new Blob([blob], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" }), nombreArchivo);

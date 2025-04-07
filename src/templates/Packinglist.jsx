@@ -108,6 +108,13 @@ export const DescargarPacking = async ( formData ) => {
         // Matrículas
         worksheet.getCell(`G${rowBase}`).value = camion.matriculaRemolque;
       });
+
+      // 5. Eliminar las otras hojas que no se usan
+      workbook.worksheets.forEach((ws, index) => {
+        if (index !== formData.numeroCamiones - 1) {
+            workbook.removeWorksheet(ws);
+        }
+    });
     
     // 6. Guardar el archivo modificado y descargarlo
         const blob = await workbook.xlsx.writeBuffer();
