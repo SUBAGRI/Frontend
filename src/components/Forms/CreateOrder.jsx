@@ -97,6 +97,7 @@ function FormOrder({ tipo, clientes, productos }) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     setFormData({})
+                    setFormData({ ...formData, createdAt: currentDateTime});
                     // Navega a la página de inicio actual
                     if (url === '/facturasRec/') {
                         navigate('/orders/create/recibidas');
@@ -163,13 +164,13 @@ function FormOrder({ tipo, clientes, productos }) {
 
                             <div className="field mb-4">
                                 {tipo === 'facturas' ? (
-                                    <ClienteAutocomplete formData={formData} setFormData={setFormData} clientes={clientes} />
+                                    <ClienteAutocomplete formData={formData} setFormData={setFormData} clientes={clientes} isEditModal={false}/>
                                 ) : (
-                                    <ProveedorAutocomplete formData={formData} setFormData={setFormData} clientes={clientes} />
+                                    <ProveedorAutocomplete formData={formData} setFormData={setFormData} clientes={clientes} isEditModal={false}/>
                                 )}
                             </div>
                             <div className="field mb-4">
-                                <ProductoAutocomplete formData={formData} setFormData={setFormData} productos={productos} />
+                                <ProductoAutocomplete formData={formData} setFormData={setFormData} productos={productos} isEditModal={false}/>
                             </div>
 
                             {/* Campos de "Pezzo" y "Costo" en el mismo div */}
