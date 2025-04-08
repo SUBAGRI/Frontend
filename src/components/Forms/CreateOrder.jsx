@@ -90,7 +90,6 @@ function FormOrder({ tipo, clientes, productos }) {
                 icon: 'success',
                 title: 'Factura añadida correctamente',
                 text: "¿Quieres añadir otra?.",
-                customClass: isDarkMode ? 'swal2-dark' : '',
                 showCancelButton: true,
                 confirmButtonText: 'Si',
                 cancelButtonText: 'No'
