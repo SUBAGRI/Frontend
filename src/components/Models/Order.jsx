@@ -26,6 +26,60 @@ function Order({ orders, fetchData, tableTab, clientes, productos }) {
         setIsModalActive(true);
     };
 
+     // Confirmacion de eliminacion
+     const handleChoice = async (order) => {
+        const result = await Swal.fire({
+            title: 'Eliminar una factura',
+            text: "¿Estas seguro? Esta accion no puede deshacerse",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "Eliminar",
+        });
+
+        if (result.isConfirmed) {
+            // Lógica para manejar la confirmación
+            handleDeleteClick(order);
+        }
+    };
+
+    const handleDeleteClick = async (order) => {
+        
+        try {
+                const response = await api.delete('/api' + "/orders/" + order.idOrder + '/'); 
+                console.log(response)
+                // Muestra una notificación de éxito con SweetAlert2 que se cierra automáticamente después de 3 segundos
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Correcto',
+                    text: "La factura ha sido eliminada correctamente",
+                    timer: 2000, // Cierra automáticamente después de 3 segundos (3000 milisegundos)
+                    timerProgressBar: true, // Muestra una barra de progreso mientras cuenta el tiempo
+                });
+        
+                } catch (error) {
+                    // Muestra una notificación de error con SweetAlert2 que se cierra automáticamente después de 3 segundos
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: "La factura no se ha podido modificar",
+                        timer: 2000, // Cierra automáticamente después de 3 segundos
+                        timerProgressBar: true, // Muestra una barra de progreso mientras cuenta el tiempo
+                    });
+                }
+        
+                try {
+                    await fetchData(); // Si falla esto, no rompe todo el flujo
+                    console.log("fetchData ejecutado con éxito");
+                } catch (fetchError) {
+                    console.error("Error al ejecutar fetchData", fetchError);
+                    alert("Por favor recargue la pagina para ver cambios");
+                }
+        
+    };
+    
+
     // Calcular el índice del primer y último pedido de la página actual
     const indexOfLastOrder = currentPage * ordersPerPage;
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
@@ -112,12 +166,21 @@ function Order({ orders, fetchData, tableTab, clientes, productos }) {
                                 <td>
                                     <button
                                         className="mr-3 fa fa-edit"
-                                        style={{ color: "#FFF177" }}
+                                        style={{ color: "#6A816" }}
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             handleEditClick(order)
                                         }}
                                     >
+                                    </button>
+                                    <button
+                                            className="fa fa-trash-o"
+                                            style={{ color: "#E61617" }}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleChoice(order)
+                                            }}
+                                            >
                                     </button>
                                 
                                 </td>

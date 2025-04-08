@@ -121,7 +121,7 @@ function FormOrderCliente() {
                                     <label htmlFor="Pezzo" className="label is-small">
                                         CIF
                                     </label>
-                                    <Input
+                                    <input
                                         className='input'
                                         type="text"
                                         name="cif"
@@ -134,7 +134,7 @@ function FormOrderCliente() {
                                     <label htmlFor="Costo" className="label is-small">
                                         C.P
                                     </label>
-                                    <Input
+                                    <input
                                         className='input'
                                         placeholder="Codigo Postal"
                                         type="number"

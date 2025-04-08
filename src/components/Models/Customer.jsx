@@ -2,7 +2,9 @@ import Pagination from '../Utils/Pagination'; // Asegúrate de importar el compo
 import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { gsap } from "gsap";
 import ModalEdit from "../Forms/ModalEditOrder";
+import Swal from 'sweetalert2'
 import "../../styles/Notification.css"
+import api from "../../api";
 
 //Facturas recibidas
 
@@ -45,6 +47,60 @@ function Customer({ facturasrec, fetchData, tableTab, clientes, productos }) {
             [idOrder]: !prev[idOrder]
         }));
     };
+
+    // Confirmacion de eliminacion
+    const handleChoice = async (facturaRec) => {
+        const result = await Swal.fire({
+            title: 'Eliminar una factura',
+            text: "¿Estas seguro? Esta accion no puede deshacerse",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: "Eliminar",
+        });
+
+        if (result.isConfirmed) {
+            // Lógica para manejar la confirmación
+            handleDeleteClick(facturaRec);
+        }
+    };
+
+    const handleDeleteClick = async (facturaRec) => {
+        
+        try {
+            console.log('/api' + "/facturasRec/" + facturaRec.idOrder + '/')
+                const response = await api.delete('/api' + "/facturasRec/" + facturaRec.idOrder + '/'); 
+                console.log(response)
+                // Muestra una notificación de éxito con SweetAlert2 que se cierra automáticamente después de 3 segundos
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Correcto',  
+                    text: "La factura ha sido eliminada correctamente",
+                    timer: 2000, // Cierra automáticamente después de 3 segundos (3000 milisegundos)
+                    timerProgressBar: true, // Muestra una barra de progreso mientras cuenta el tiempo
+                });
+        
+                } catch (error) {
+                    // Muestra una notificación de error con SweetAlert2 que se cierra automáticamente después de 3 segundos
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: "La factura no se ha podido modificar",
+                        timer: 2000, // Cierra automáticamente después de 3 segundos
+                        timerProgressBar: true, // Muestra una barra de progreso mientras cuenta el tiempo
+                    });
+                }
+        
+                try {
+                    await fetchData(); // Si falla esto, no rompe todo el flujo
+                    console.log("fetchData ejecutado con éxito");
+                } catch (fetchError) {
+                    console.error("Error al ejecutar fetchData", fetchError);
+                    alert("Por favor recargue la pagina para ver cambios");
+                }
+    };
+    
 
     // Animaciones de apertura y cierre con GSAP
     const additionalInfoRefs = useRef({});
@@ -95,7 +151,7 @@ function Customer({ facturasrec, fetchData, tableTab, clientes, productos }) {
                                 <td>{formatDate(facturaRec.fecha)}</td>
                                 <td>{facturaRec.numfac}</td>
                                 <td>{facturaRec.proveedor}</td>
-                                <td>{facturaRec.baseimp} €</td>    
+                                <td>{facturaRec.baseimp} €</td> 
                                 <td>{facturaRec.IVA} %</td>
                                 <td>{facturaRec.IVAimp} €</td>
                                 <td>{facturaRec.IRPf} %</td>
@@ -107,11 +163,20 @@ function Customer({ facturasrec, fetchData, tableTab, clientes, productos }) {
                                         style={{ color: "#FFF177" }}
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            setIsModalActive(true);
-                                            handleEditClick(facturaRec)
+                                            handleEditClick(facturaRec);
                                         }}
                                     >
                                     </button>
+                                    <button
+                                            className="fa fa-trash-o"
+                                            style={{ color: "#E61617" }}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleChoice(facturaRec);
+                                            }}
+                                            >
+                                    </button>
+                                    
                                 </td>
                             </tr>
 

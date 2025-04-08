@@ -112,6 +112,7 @@ function Cliente({ clientes, fetchData, tableTab }) {
                                         }}
                                     >
                                     </button>
+
                                 </td>
                             </tr>
 

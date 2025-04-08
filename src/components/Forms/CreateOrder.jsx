@@ -43,6 +43,21 @@ function FormOrder({ tipo, clientes, productos }) {
         setFormData({ ...formData, createdAt: currentDateTime});
     }, []);
 
+    
+    const emptyFormData = {
+        createdAt: currentDateTime,
+        fecha: '',
+        numfac: '',
+        proveedor: '',
+        baseimp: 0.0,
+        IVA: 0.0,
+        IVAimp: 0.0,
+        IRPf: 0.0,
+        IRPfimp: 0.0,
+        total: 0.0,
+        producto: '',
+    };
+
     const handleChange = (e) => {
         const { name, type, checked, value } = e.target;
         const inputValue = type === 'checkbox' ? checked : value;
@@ -97,14 +112,8 @@ function FormOrder({ tipo, clientes, productos }) {
                 cancelButtonText: 'No'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    setFormData({})
-                    setFormData({ ...formData, createdAt: currentDateTime});
-                    // Navega a la página de inicio actual
-                    if (url === '/facturasRec/') {
-                        navigate('/orders/create/recibidas');
-                    } else {
-                        navigate('/orders/create/facturas');
-                    }
+                    setFormData(emptyFormData)
+                    
                 } else {
                     navigate('/orders');
                 }
