@@ -150,13 +150,13 @@ function ModalEdit({ formData, closeModal, isActive, fetchData, tipo, clientes, 
 
                             <div className="field mb-4">
                                 {tipo === 'facturas' ? (
-                                    <ClienteAutocomplete formData={formData} setFormData={setFormData} clientes={clientes} />
+                                    <ClienteAutocomplete formData={formData2} setFormData={setFormData} clientes={clientes} />
                                 ) : (
-                                    <ProveedorAutocomplete formData={formData} setFormData={setFormData} clientes={clientes} />
+                                    <ProveedorAutocomplete formData={formData2} setFormData={setFormData} clientes={clientes} />
                                 )}
                             </div>
                             <div className="field mb-4">
-                            <ProductoAutocomplete formData={formData} setFormData={setFormData} productos={productos} />
+                            <ProductoAutocomplete formData={formData2} setFormData={setFormData} productos={productos} />
                             </div>
                             <div className="field mb-2 is-grouped" style={{ justifyContent: 'space-evenly' }}>
                                 <div className="flex flex-col w-full gap-1">
