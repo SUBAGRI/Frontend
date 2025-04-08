@@ -15,6 +15,13 @@ function Cliente({ clientes, fetchData, tableTab }) {
 
     const [currentPage, setCurrentPage] = useState(1);
 
+    const [selectedCliente, setSelectedCliente] = useState([])
+
+    const handleEditClick = (cliente) => {
+        setSelectedCliente(cliente); // Actualizar el estado con el pedido seleccionado
+        setIsModalActive(true);
+    };
+
     // Número de pedidos por página
     const ordersPerPage = 15;
 
@@ -101,26 +108,10 @@ function Cliente({ clientes, fetchData, tableTab }) {
                                         style={{ color: "#FFF177" }}
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            setIsModalActive(true);
+                                            handleEditClick(cliente)
                                         }}
                                     >
                                     </button>
-                                    {setIsModalActive && <ModalEditCliente isActive={isModalActive}
-                                        closeModal={() => setIsModalActive(false)} formData={cliente} tipo='facturasrec' />}
-                                    {
-                                        // Si el pedido está terminado, muestra un botón para volver a ponerlo como no terminado
-                                        cliente.finished && (
-                                            <button
-                                                className="fa fa-undo" // Clase CSS para el ícono de deshacer (o similar)
-                                                style={{ color: "#E06D5B" }} // Puedes elegir un color diferente
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    handleChoice(cliente)
-                                                }} // Llama a la función handleUnfinishedOrder al hacer clic
-                                            >
-                                            </button>
-                                        )
-                                    }
                                 </td>
                             </tr>
 
@@ -128,7 +119,8 @@ function Cliente({ clientes, fetchData, tableTab }) {
                     ))}
                 </tbody>
             </table>
-
+            {setIsModalActive && <ModalEditCliente isActive={isModalActive}
+            closeModal={() => setIsModalActive(false)} formData={selectedCliente} fetchData={fetchData} />}
             {/* Paginación */}
             <Pagination
                 ordersPerPage={ordersPerPage}

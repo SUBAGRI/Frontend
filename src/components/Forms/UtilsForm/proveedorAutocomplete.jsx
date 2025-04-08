@@ -7,7 +7,7 @@ const ProveedorAutocomplete = ({ formData, setFormData, clientes, isEditModal })
 
     const handleChange = (e) => {
         const searchValue = e.target.value;
-        setFormData({ ...formData, cliente: searchValue });
+        setFormData({ ...formData, proveedor: searchValue });
 
         if (searchValue.length === 0) {
             setShowSuggestions(false);
@@ -23,7 +23,7 @@ const ProveedorAutocomplete = ({ formData, setFormData, clientes, isEditModal })
     };
 
     const handleSelect = (nombre) => {
-        setFormData({ ...formData, cliente: nombre });
+        setFormData({ ...formData, proveedor: nombre });
         setShowSuggestions(false);
     };
 
@@ -33,9 +33,9 @@ const ProveedorAutocomplete = ({ formData, setFormData, clientes, isEditModal })
                 label="Proveedor"
                 className="input"
                 type="text"
-                name="cliente"
+                name="proveedor"
                 placeholder="Proveedor"
-                value={formData.cliente || ""}
+                value={formData.proveedor || ""}
                 onChange={handleChange}
                 autoComplete="nope"
             />

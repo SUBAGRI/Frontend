@@ -12,6 +12,8 @@ function Customer({ facturasrec, fetchData, tableTab, clientes, productos }) {
     // Estado del modal de edición
     const [isModalActive, setIsModalActive] = useState(false);
 
+    const [selectedFactura, setSelectedFactura] = useState([])
+
     const [currentPage, setCurrentPage] = useState(1);
 
     // Número de pedidos por página
@@ -29,6 +31,11 @@ function Customer({ facturasrec, fetchData, tableTab, clientes, productos }) {
     const formatDate = (dateString) => {
         const options = { day: 'numeric', month: 'short', year: 'numeric' };
         return new Date(dateString).toLocaleDateString("it-IT", options);
+    };
+
+    const handleEditClick = (facturaRec) => {
+        setSelectedFactura(facturaRec); // Actualizar el estado con el pedido seleccionado
+        setIsModalActive(true);
     };
 
     // Alternar la expansión de una fila específica
@@ -101,25 +108,10 @@ function Customer({ facturasrec, fetchData, tableTab, clientes, productos }) {
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             setIsModalActive(true);
+                                            handleEditClick(facturaRec)
                                         }}
                                     >
                                     </button>
-                                    {setIsModalActive && <ModalEdit isActive={isModalActive}
-                                        closeModal={() => setIsModalActive(false)} formData={facturaRec} tipo='facturasrec' clientes={clientes} productos={productos} />}
-                                    {
-                                        // Si el pedido está terminado, muestra un botón para volver a ponerlo como no terminado
-                                        facturaRec.finished && (
-                                            <button
-                                                className="fa fa-undo" // Clase CSS para el ícono de deshacer (o similar)
-                                                style={{ color: "#E06D5B" }} // Puedes elegir un color diferente
-                                                onClick={(e) => {
-                                                    e.stopPropagation();
-                                                    handleChoice(facturaRec)
-                                                }} // Llama a la función handleUnfinishedOrder al hacer clic
-                                            >
-                                            </button>
-                                        )
-                                    }
                                 </td>
                             </tr>
 
@@ -127,7 +119,8 @@ function Customer({ facturasrec, fetchData, tableTab, clientes, productos }) {
                     ))}
                 </tbody>
             </table>
-
+            {setIsModalActive && <ModalEdit isActive={isModalActive}
+            closeModal={() => setIsModalActive(false)} formData={selectedFactura} tipo='facturasrec' clientes={clientes} productos={productos} fetchData={fetchData}/>}
             {/* Paginación */}
             <Pagination
                 ordersPerPage={ordersPerPage}

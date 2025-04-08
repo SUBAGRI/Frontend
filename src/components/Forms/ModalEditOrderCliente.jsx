@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { Input } from './Input';
 import { FormProvider, useForm } from 'react-hook-form'
 
-function ModalEditCliente({ formData, closeModal, isActive }) {
+function ModalEditCliente({ formData, closeModal, isActive, fetchData }) {
     const methods = useForm()
     const [formData2, setFormData] = useState({});
     const idCliente = formData && formData.idCliente; // Verifica si formData está definido antes de acceder a idOrder
@@ -21,16 +21,38 @@ function ModalEditCliente({ formData, closeModal, isActive }) {
         setFormData({ ...formData2, [name]: inputValue });
     };
 
-    const onSubmit = methods.handleSubmit(e => {
-        //put
-        
-            api.put(`/api/clientes/${idCliente}/`, formData2)
-            .then((res) => {
-                alert('Order updated successfully')
-            })
-            .catch((err) => alert(err))
+    const onSubmit = async () => {
         closeModal();
-    })
+        try {
+            const response = await api.put(`/api/clientes/${idCliente}/`, formData2);
+            console.log("Status de la respuesta:", response.status);
+            // Muestra una notificación de éxito con SweetAlert2 que se cierra automáticamente después de 3 segundos
+            await Swal.fire({
+                icon: 'success',
+                title: 'Correcto',
+                text: "La factura ha sido modificada correctamente",
+                timer: 2000, // Cierra automáticamente después de 3 segundos (3000 milisegundos)
+                timerProgressBar: true, // Muestra una barra de progreso mientras cuenta el tiempo
+
+            });
+        } catch (error) {
+            // Muestra una notificación de error con SweetAlert2 que se cierra automáticamente después de 3 segundos
+            await Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: "La factura no se ha podido modificar",
+                timer: 2000, // Cierra automáticamente después de 3 segundos
+                timerProgressBar: true, // Muestra una barra de progreso mientras cuenta el tiempo
+            });
+        }
+        try {
+            await fetchData(); // Si falla esto, no rompe todo el flujo
+            console.log("fetchData ejecutado con éxito");
+        } catch (fetchError) {
+            console.error("Error al ejecutar fetchData", fetchError);
+            alert("Por favor recargue la pagina para ver cambios");
+        }
+    };
 
     return (
         <div className={`modal is-mobile dark ${isActive ? 'is-active' : ''}`}>

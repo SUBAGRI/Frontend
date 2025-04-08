@@ -19,6 +19,13 @@ function Order({ orders, fetchData, tableTab, clientes, productos }) {
     // Número de pedidos por página
     const ordersPerPage = 15;
 
+    const [selectedFactura, setSelectedFactura] = useState([])
+    
+    const handleEditClick = (factura) => {
+        setSelectedFactura(factura); // Actualizar el estado con el pedido seleccionado
+        setIsModalActive(true);
+    };
+
     // Calcular el índice del primer y último pedido de la página actual
     const indexOfLastOrder = currentPage * ordersPerPage;
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
@@ -108,20 +115,20 @@ function Order({ orders, fetchData, tableTab, clientes, productos }) {
                                         style={{ color: "#FFF177" }}
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            setIsModalActive(true);
+                                            handleEditClick(order)
                                         }}
                                     >
                                     </button>
-                                    {setIsModalActive && <ModalEdit isActive={isModalActive}
-                                        closeModal={() => setIsModalActive(false)} formData={order} tipo='facturas' clientes={clientes} productos={productos} />}
-                                    
+                                
                                 </td>
                             </tr>
                         </React.Fragment>
                     ))}
                 </tbody>
             </table>
-
+            {setIsModalActive && <ModalEdit isActive={isModalActive}
+            closeModal={() => setIsModalActive(false)} formData={selectedFactura} tipo='facturas' clientes={clientes} productos={productos} fetchData={fetchData}/>}
+                                    
             {/* Paginación */}
             <Pagination
                 ordersPerPage={ordersPerPage}

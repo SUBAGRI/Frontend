@@ -31,6 +31,7 @@ function Orders() {
     };
 
     const fetchDataFactRec = () => {
+        console.log("Llamada a fetchDataFactRec");
         api.get("api/facturasRec/")
             .then((res) => {
                 setFacturasRec(res.data);
@@ -58,7 +59,6 @@ function Orders() {
             .then((res) => {
                 setProductos(res.data);
                 setOriginalProductos(res.data);
-                console.log(res.data)
             })
             .catch(() => {
                 showErrorAndLogout();

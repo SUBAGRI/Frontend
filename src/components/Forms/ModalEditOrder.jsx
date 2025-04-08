@@ -11,7 +11,6 @@ import ProductoAutocomplete from './UtilsForm/productoAutocomplete';
 function ModalEdit({ formData, closeModal, isActive, fetchData, tipo, clientes, productos }) {
     const methods = useForm()
     const [formData2, setFormData] = useState({});
-    console.log(formData);
     const orderId = formData && formData.idOrder; // Verifica si formData está definido antes de acceder a idOrder
 
     const sitio = localStorage.getItem("Sitio");
@@ -87,7 +86,7 @@ function ModalEdit({ formData, closeModal, isActive, fetchData, tipo, clientes, 
         closeModal();
         try {
             const url = tipo === 'facturas' ? "/orders/" : "/facturasRec/";
-            const response = await api.put('/api' + url + orderId, formData2);
+            const response = await api.put('/api' + url + orderId + '/', formData2);
             // Muestra una notificación de éxito con SweetAlert2 que se cierra automáticamente después de 3 segundos
             await Swal.fire({
                 icon: 'success',
@@ -98,7 +97,6 @@ function ModalEdit({ formData, closeModal, isActive, fetchData, tipo, clientes, 
                 customClass: isDarkMode ? 'swal2-dark' : '',
 
             });
-            fetchData();
 
         } catch (error) {
             // Muestra una notificación de error con SweetAlert2 que se cierra automáticamente después de 3 segundos
@@ -109,7 +107,14 @@ function ModalEdit({ formData, closeModal, isActive, fetchData, tipo, clientes, 
                 timer: 2000, // Cierra automáticamente después de 3 segundos
                 timerProgressBar: true, // Muestra una barra de progreso mientras cuenta el tiempo
             });
+        }
 
+        try {
+            await fetchData(); // Si falla esto, no rompe todo el flujo
+            console.log("fetchData ejecutado con éxito");
+        } catch (fetchError) {
+            console.error("Error al ejecutar fetchData", fetchError);
+            alert("Por favor recargue la pagina para ver cambios");
         }
 
     };
