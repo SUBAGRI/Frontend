@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "../Input";
 
-const ProductoAutocomplete = ({ formData, setFormData, productos }) => {
+const ProductoAutocomplete = ({ formData, setFormData, productos, isEditModal }) => {
     const [filteredClientes, setFilteredClientes] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -43,9 +43,9 @@ const ProductoAutocomplete = ({ formData, setFormData, productos }) => {
                 <div
                 style={{
                     position: "absolute",
-                    top: "57%",
-                    left: 280,
-                    width: "44.5%",
+                    top: isEditModal ? "52.8%" : "57%",
+                    left: isEditModal ? 30 : 280,
+                    width: isEditModal ? "88%" : "44.5%",
                     backgroundColor: "#fff",
                     border: "1px solid #ccc",
                     borderRadius: "4px",

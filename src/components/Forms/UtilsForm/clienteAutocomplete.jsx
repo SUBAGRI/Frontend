@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "../Input";
 
-const ClienteAutocomplete = ({ formData, setFormData, clientes }) => {
+const ClienteAutocomplete = ({ formData, setFormData, clientes, isEditModal }) => {
     const [filteredClientes, setFilteredClientes] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
 

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Input } from "../Input";
 
-const ProveedorAutocomplete = ({ formData, setFormData, clientes }) => {
+const ProveedorAutocomplete = ({ formData, setFormData, clientes, isEditModal }) => {
     const [filteredClientes, setFilteredClientes] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
 
@@ -43,9 +43,9 @@ const ProveedorAutocomplete = ({ formData, setFormData, clientes }) => {
                 <div
                 style={{
                     position: "absolute",
-                    top: "47.5%",
-                    left: 280,
-                    width: "44.5%",
+                    top: isEditModal ? "43%" : "47.5%",
+                    left: isEditModal ? 30 : 280,
+                    width: isEditModal ? "88%" : "44.5%",
                     backgroundColor: "#fff",
                     border: "1px solid #ccc",
                     borderRadius: "4px",
