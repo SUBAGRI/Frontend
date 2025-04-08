@@ -33,7 +33,7 @@ const ProveedorAutocomplete = ({ formData, setFormData, clientes }) => {
                 label="Proveedor"
                 className="input"
                 type="text"
-                name="proveedor"
+                name="cliente"
                 placeholder="Proveedor"
                 value={formData.cliente || ""}
                 onChange={handleChange}
