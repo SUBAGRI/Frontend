@@ -27,12 +27,12 @@ function Customer({ facturasrec, fetchData, tableTab, clientes, productos }) {
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
     
     // Obtener los prdocutso de la página actual
-    const currentFacturasRed = facturasrec.slice(indexOfFirstOrder, indexOfLastOrder);
+    const currentFacturasRed = facturasrec.sort((a, b) => new Date(b.fecha) - new Date(a.fecha)).slice(indexOfFirstOrder, indexOfLastOrder);
 
     // Formatear fecha
     const formatDate = (dateString) => {
         const options = { day: 'numeric', month: 'short', year: 'numeric' };
-        return new Date(dateString).toLocaleDateString("it-IT", options);
+        return new Date(dateString).toLocaleDateString("es-ES", options);
     };
 
     const handleEditClick = (facturaRec) => {

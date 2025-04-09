@@ -66,7 +66,7 @@ function FormOrder({ tipo, clientes, productos }) {
             let updatedData = { ...prevData, [name]: inputValue };
 
             // Si el campo es numérico, eliminar ceros iniciales (excepto "0" solo)
-            if (!isNaN(inputValue) && inputValue.length > 1 && inputValue.startsWith("0")) {
+            if (!isNaN(inputValue) && inputValue.length > 1 && inputValue.startsWith("0") && name != 'numfac') {
                 let cleanedValue = inputValue.replace(/^0+/, ""); // Quita los ceros iniciales
                 updatedData[name] = cleanedValue;
             }

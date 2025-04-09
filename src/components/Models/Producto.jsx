@@ -21,7 +21,7 @@ function Producto({ productos, fetchData, tableTab }) {
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
 
     // Obtener los prdocutso de la página actual
-    const currentProducts = productos.slice(indexOfFirstOrder, indexOfLastOrder);
+    const currentProducts = productos.sort((a, b) => new Date(a.codigo) - new Date(b.codigo)).slice(indexOfFirstOrder, indexOfLastOrder);
 
     // Formatear fecha
     const formatDate = (dateString) => {

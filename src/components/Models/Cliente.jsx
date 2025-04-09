@@ -30,20 +30,13 @@ function Cliente({ clientes, fetchData, tableTab }) {
     const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
     
     // Obtener los prdocutso de la página actual
-    const currentClientes = clientes.slice(indexOfFirstOrder, indexOfLastOrder);
+    const currentClientes = clientes.sort((a, b) => new Date(a.nombre) - new Date(b.nombre)).slice(indexOfFirstOrder, indexOfLastOrder);
 
 
     // Formatear fecha
     const formatDate = (dateString) => {
         const options = { day: 'numeric', month: 'short', year: 'numeric' };
-        return new Date(dateString).toLocaleDateString("it-IT", options);
-    };
-
-    // Estado de los pedidos enviados
-    const shippedStatus = {
-        0: "Not shipped",
-        1: "Shipped",
-        2: "In shop"
+        return new Date(dateString).toLocaleDateString("es-ES", options);
     };
 
 
