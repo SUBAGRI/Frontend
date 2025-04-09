@@ -30,13 +30,35 @@ function Header({ orders, originalOrders, setOrders, fetchData,
 
     const exportToExcel = async () => {
         const response = await api.get(url);
-        const orders = response.data;
+        let orders = response.data;
+    
+        // 1. Ordenar por fecha ascendente
+        orders.sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+    
+        // 2. Eliminar la propiedad `createdAt`
+        orders = orders.map(({ createdAt, ...rest }) => rest);
+    
+        // 3. Calcular totales
+        const totalBaseImp = orders.reduce((sum, item) => sum + (parseFloat(item.baseimp) || 0), 0);
+        const totalIVAImp = orders.reduce((sum, item) => sum + (parseFloat(item.IVAimp) || 0), 0);
+        const totaltotal = orders.reduce((sum, item) => sum + (parseFloat(item.total) || 0), 0);
+    
+        // 4. Añadir fila de totales
+        orders.push({
+            fecha: 'TOTAL',
+            baseimp: totalBaseImp.toFixed(2),
+            IVAimp: totalIVAImp.toFixed(2),
+            total: totaltotal.toFixed(2),
+            // Puedes añadir más campos si quieres sumar otros
+        });
+    
+        // 5. Crear el Excel
         const wb = XSLX.utils.book_new();
         const ws = XSLX.utils.json_to_sheet(orders, {
-            cellStyles: true, // Habilitar el estilo de celda
-            cellDates: true, // Detectar automáticamente y formatear las fechas de las celdas
-        })
-
+            cellStyles: true,
+            cellDates: true,
+        });
+    
         XSLX.utils.book_append_sheet(wb, ws, "Sheet1");
         XSLX.writeFile(wb, `${sitio2} ${currentDate}.xlsx`);
     };
