@@ -23,11 +23,6 @@ function Producto({ productos, fetchData, tableTab }) {
     // Obtener los prdocutso de la página actual
     const currentProducts = productos.sort((a, b) => new Date(a.codigo) - new Date(b.codigo)).slice(indexOfFirstOrder, indexOfLastOrder);
 
-    // Formatear fecha
-    const formatDate = (dateString) => {
-        const options = { day: 'numeric', month: 'short', year: 'numeric' };
-        return new Date(dateString).toLocaleDateString("it-IT", options);
-    };
 
     // Alternar la expansión de una fila específica
     const handleRowClick = (idOrder) => {

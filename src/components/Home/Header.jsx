@@ -38,7 +38,7 @@ function Header({ orders, originalOrders, setOrders, fetchData,
         })
 
         XSLX.utils.book_append_sheet(wb, ws, "Sheet1");
-        XSLX.writeFile(wb, `${sitio} ${currentDate}.xlsx`);
+        XSLX.writeFile(wb, `${sitio2} ${currentDate}.xlsx`);
     };
 
     const exportToCSV = async () => {
@@ -146,7 +146,7 @@ function Header({ orders, originalOrders, setOrders, fetchData,
                             </a>
                         </li>
                         <li onClick={() => {setNavTab("pane-2");
-                                            setSitio("recibidas");
+                                            setSitio("facturasRec");
                         }} className={navTab === "pane-2" ? "is-active" : ""}>
                             <a>
                                 <span className="icon is-small">
