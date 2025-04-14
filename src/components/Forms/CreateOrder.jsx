@@ -97,7 +97,7 @@ function FormOrder({ tipo, clientes, productos }) {
     };
 
     const handleSubmit = methods.handleSubmit(async (e) => {
-
+        console.log(formData)
         try {
             const url = tipo === 'facturas' ? "/orders/" : "/facturasRec/";
             const response = await api.post('/api' + url, formData);
