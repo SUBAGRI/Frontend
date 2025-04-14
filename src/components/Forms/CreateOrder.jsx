@@ -37,10 +37,8 @@ function FormOrder({ tipo, clientes, productos }) {
     let currentDateTime
 
     useEffect(() => {
-        const currentDate = new Date().toISOString().split('T')[0];
-        const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-        currentDateTime = `${currentDate}T${currentTime}`;
-        setFormData({ ...formData, createdAt: currentDateTime});
+        const currentDateTime = new Date().toISOString(); // ✅ en formato ISO válido
+        setFormData((prevData) => ({ ...prevData, createdAt: currentDateTime }));
     }, []);
 
     
