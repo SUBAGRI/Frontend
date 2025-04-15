@@ -98,6 +98,11 @@ const ClientForm = () => {
     
   };
 
+  const handleFactura = async (e) => {
+    e.preventDefault();
+    await ModifyExcel(formData)
+  }
+
   return (
     <div className="flex flex-col w-full max-w-3xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold text-center mb-6">Formulario de Factura</h2>
@@ -365,6 +370,13 @@ const ClientForm = () => {
           className="mt-6 bg-blue-500 text-white py-2 px-4 rounded-lg w-full"
         >
           Descargar documentacion
+        </button>
+
+        <button
+          onClick={handleFactura}
+          className="mt-6 bg-blue-500 text-white py-2 px-4 rounded-lg w-full"
+        >
+          Descargar factura
         </button>
 
       </form>
