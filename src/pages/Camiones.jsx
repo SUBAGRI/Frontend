@@ -18,7 +18,9 @@ const ClientForm = () => {
   });
 
   // Lista de clientes (puedes cargarla dinámicamente)
-  const clientes = ['STE PROJ FRIO SARL', 'STE VOYAGE BOUHAOUI', 'ALF SMARA', 'THANKS GLOBAL', "SOCIETE FRERES CHERGUIA", "LYAQOUTI AGRO SARL", "SOCIETE INES Y HENOS SARL AU"];
+  const clientes = ['STE PROJ FRIO SARL', 'STE VOYAGE BOUHAOUI', 'ALF SMARA', 'THANKS GLOBAL', "SOCIETE FRERES CHERGUIA", "LYAQOUTI AGRO SARL", "SOCIETE INES Y HENOS SARL AU",
+    "FREPASCO SARL"
+  ];
 
   // Lista de tipos de paja
   const tiposDePaja = ['Heno de avena', 'Guisante', 'Imabe', 'Jovisa', 'Paquete pequeño'];
@@ -31,7 +33,8 @@ const ClientForm = () => {
         const cliente = name === "cliente" ? value : prevData.cliente;
         const shouldResetFacturaReal = (
             cliente !== 'STE PROJ FRIO SARL' &&
-            cliente !== 'STE VOYAGE BOUHAOUI'
+            cliente !== 'STE VOYAGE BOUHAOUI' && 
+            cliente !== 'FREPASCO SARL'
         );
 
         return {
@@ -134,7 +137,7 @@ const ClientForm = () => {
           </select>
         </div>
             
-        {(formData.cliente === "STE VOYAGE BOUHAOUI" || formData.cliente === "STE PROJ FRIO SARL") && (
+        {(formData.cliente === "STE VOYAGE BOUHAOUI" || formData.cliente === "STE PROJ FRIO SARL" || formData.cliente === "FREPASCO SARL") && (
           <div className="flex flex-col w-full gap-2">
             <label htmlFor="facturaReal" className="label is-small" style={{ marginBottom: '5.25px' }}>
               Factura Real

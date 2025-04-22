@@ -47,6 +47,13 @@ const clientesData = {
       "47245041-M",
       "ICE: 002605084000051",
     ],
+    "FREPASCO SARL": [
+      "FREPASCO SARL",
+      "82 RUE SOUMAYA 4EME ETG N16",
+      "CASABLANCA",
+      "25050 MARRUECOS",
+      "ICE: 002543267000031",
+    ]
   };
 
   const preciosPorClienteYTipo = {
@@ -98,6 +105,13 @@ const clientesData = {
       "Guisante": 145,
       "Paquete pequeño": 145,
       "Heno de avena": 200,
+    },
+    "FREPASCO SARL": {
+      "Imabe":0,
+      "Jovisa":0,
+      "Guisante":0,
+      "Paquete pequeño": 0,
+      "Heno de avena": 0,
     }
   };
 
