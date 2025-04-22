@@ -107,11 +107,11 @@ const clientesData = {
       "Heno de avena": 200,
     },
     "FREPASCO SARL": {
-      "Imabe":0,
-      "Jovisa":0,
-      "Guisante":0,
-      "Paquete pequeño": 0,
-      "Heno de avena": 0,
+      "Imabe":110,
+      "Jovisa":110,
+      "Guisante":140,
+      "Paquete pequeño": 145,
+      "Heno de avena": 190,
     }
   };
 
@@ -124,7 +124,7 @@ export const ModifyExcel = async ( formData ) => {
 
         // Fecha en formato 280325
         const fechaArchivo = `${day}${month}${year.slice(2)}`;
-        const nombreArchivo = `F${formData.numeroFactura} ${formData.cliente} ${fechaArchivo}.xlsx`;
+        const nombreArchivo = `F${formData.numeroFactura} ${formData.cliente} ${fechaArchivo}${formData.facturaReal === 'si' ? ' Real' : ''}.xlsx`;
 
         // 1. Cargar la plantilla desde public/
         let response;

@@ -46,7 +46,7 @@ const clientesData = {
       "47245041-M",
       "ICE: 002605084000051",
     ],
-    "FREPASCO": [
+    "FREPASCO SARL": [
       "FREPASCO SARL",
       "82 RUE SOUMAYA 4EME ETG N16",
       "CASABLANCA",
