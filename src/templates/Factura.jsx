@@ -192,7 +192,9 @@ export const ModifyExcel = async ( formData ) => {
               'MATRICULA ' + camion.matriculaTractora + ' REMOLQUE ' + camion.matriculaRemolque;
           
             // Precio
-            const precioFinal = formData.facturaReal === 'no' ? 80 : precio;
+            const precioFinal = formData.facturaReal === 'no'
+            ? (formData.cliente === 'SOCIETE INES Y HENOS SARL AU' ? 50 : 80)
+            : precio;
             worksheet.getCell(`F${rowBase}`).value = precioFinal;
 
             modelo046row = rowBase + 2

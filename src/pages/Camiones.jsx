@@ -137,7 +137,8 @@ const ClientForm = () => {
           </select>
         </div>
             
-        {(formData.cliente === "STE VOYAGE BOUHAOUI" || formData.cliente === "STE PROJ FRIO SARL" || formData.cliente === "FREPASCO SARL") && (
+        {(formData.cliente === "STE VOYAGE BOUHAOUI" || formData.cliente === "STE PROJ FRIO SARL" || formData.cliente === "FREPASCO SARL" || 
+          formData.cliente === "SOCIETE INES Y HENOS SARL AU") && (
           <div className="flex flex-col w-full gap-2">
             <label htmlFor="facturaReal" className="label is-small" style={{ marginBottom: '5.25px' }}>
               Factura Real
