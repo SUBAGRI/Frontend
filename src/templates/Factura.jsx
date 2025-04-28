@@ -93,8 +93,8 @@ const clientesData = {
       "Paquete pequeño": 140,
     },
     "SOCIETE INES Y HENOS SARL AU": {
-      "Imabe": 120,
-      "Jovisa": 120,
+      "Imabe": 115,
+      "Jovisa": 115,
       "Guisante": 145,
       "Paquete pequeño": 145,
       "Heno de avena": 200,
