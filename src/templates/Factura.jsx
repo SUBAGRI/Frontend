@@ -180,8 +180,8 @@ export const ModifyExcel = async ( formData ) => {
             // Carga
             const cellCarga = worksheet.getCell(`C${rowBase}`);
             if (tipo === 'Heno de avena') {
-              cellCarga.value = 'TN DE ' + tipo.toUpperCase();
-            } else if (tipo === 'Guisante') {
+              cellCarga.value = 'TN PAJA DE TRIGO PRENSADA '
+            } if (tipo === 'Guisante') {
               cellCarga.value = 'TN PAJA DE ' + tipo.toUpperCase() + ' PRENSADA';
             } else {
               cellCarga.value = 'TN PAJA DE TRIGO PRENSADA ' + tipo.toUpperCase();
@@ -208,6 +208,11 @@ export const ModifyExcel = async ( formData ) => {
           worksheet.getCell(`C${modelo046row}`).value = 'TASAS MODELO 046'
           worksheet.getCell(`F${modelo046row}`).value = 26.33
           worksheet.getCell(`G${modelo046row}`).value = 26.33
+        }
+
+        if (cliente === 'ALF SMARA') {
+          worksheet.getCell(`C${modelo046row + 2}`).value = 'ORIGEN: ESPAÑA'
+          worksheet.getCell(`C${modelo046row + 3}`).value = 'DESTINO: MARRUECOS'
         }
 
          // 5. Eliminar las otras hojas que no se usan
